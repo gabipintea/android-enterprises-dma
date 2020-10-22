@@ -1,4 +1,4 @@
-package com.example.g1094_seminar3;
+package com.android_enterprises.discount_cards;
 
 import org.junit.Test;
 

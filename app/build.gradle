@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.g1094_seminar3"
+        applicationId "com.android_enterprises.com.android_enterprises.com.android_enterprises.discount_cards"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
