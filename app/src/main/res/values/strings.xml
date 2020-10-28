@@ -4,4 +4,9 @@
     <string name="select_shop">Select Shop</string>
     <string name="select_discount">Choose Discount (%)</string>
     <string name="expiry_date">Choose Expiry Date</string>
+    <string-array name="shop_list">
+        <item>Lidl</item>
+        <item>Kaufland</item>
+        <item>Carrefour</item>
+    </string-array>
 </resources>

@@ -31,10 +31,12 @@
 
     <Spinner
         android:id="@+id/shopSpinner"
+        android:entries="@array/shop_list"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
-        android:autofillHints="shop"/>
+        android:autofillHints="shop"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/txtDiscountValue"
@@ -71,10 +73,12 @@
         android:ems="10"
         android:inputType="date"
         android:autofillHints="no"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnAddCard"
+        android:onClick="showDetails"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="240dp"
         android:layout_height="86dp"
