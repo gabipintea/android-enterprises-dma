@@ -2,6 +2,7 @@ package com.android_enterprises.discount_cards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,4 +31,5 @@ public class ShowDetails extends AppCompatActivity {
         setResult(RESULT_OK, returnIntent);
         finish();
     }
+
 }

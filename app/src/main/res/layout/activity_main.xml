@@ -7,78 +7,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/txtAddCard"
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.android_enterprises.discount_cards.CardDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:height="50dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/add_card_title"
-        android:textAlignment="center"
-        android:textColor="@color/perfectBlue"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/txtSelectShop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_shop"
-        android:textAlignment="center"
-        android:height="50dp"
-        android:textSize="25sp"
-        android:labelFor="@id/shopSpinner" />
-
-    <Spinner
-        android:id="@+id/shopSpinner"
-        android:entries="@array/shop_list"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:autofillHints="shop"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/txtDiscountValue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_discount"
-        android:textAlignment="center"
-        android:height="50dp"
-        android:textSize="25sp"
-        android:labelFor="@id/discountValue"/>
-
-    <SeekBar
-        android:id="@+id/discountValue"
-        style="@style/Widget.AppCompat.SeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
-        android:max="100" />
-
-    <TextView
-        android:id="@+id/txtExpiryDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/expiry_date"
-        android:textAlignment="center"
-        android:height="50dp"
-        android:textSize="25sp"
-        android:labelFor="@id/expiryDate" />
-
-    <EditText
-        android:id="@+id/expiryDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        android:autofillHints="no"
-        android:layout_marginBottom="30dp"
-        android:textAlignment="center" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_card_details" />
 
     <Button
         android:id="@+id/btnAddCard"
-        android:onClick="showDetails"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="240dp"
         android:layout_height="86dp"

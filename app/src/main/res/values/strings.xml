@@ -9,4 +9,5 @@
         <item>Kaufland</item>
         <item>Carrefour</item>
     </string-array>
+    <string name="add_card">Add Card</string>
 </resources>

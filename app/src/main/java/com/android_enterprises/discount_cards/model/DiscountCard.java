@@ -3,9 +3,9 @@ package com.android_enterprises.discount_cards.model;
 import java.util.Date;
 
 public class DiscountCard {
-    Shop shop = new Shop();
-    float discount = 1;
-    Date expiryDate = new Date();
+    static Shop shop = new Shop();
+    static float discount = 1;
+    static Date expiryDate = new Date();
 
     public DiscountCard(Shop shop, float discount) {
         this.shop = shop;
@@ -45,7 +45,6 @@ public class DiscountCard {
         this.expiryDate = expiryDate;
     }
 
-    @Override
     public String toString() {
         return "DiscountCard{" +
                 "shop=" + shop +
