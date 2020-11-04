@@ -34,7 +34,6 @@ public class CardsList extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     // TODO: Make a list of cards to be shown in the listview/cardsview
     public static CardsList newInstance(DiscountCard discountCard) {
         CardsList fragment = new CardsList();
@@ -58,11 +57,11 @@ public class CardsList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         displayedView = inflater.inflate(R.layout.fragment_cards_list, container, false);
-        // listener.onViewClick(mParam1); // triggering a method on display
+        listener.onViewClick(mParam1); // triggering a method on display
         return displayedView;   // TODO: Find out why this fragment does appear at the bottom
     }
 
-    /* also needed for triggering something on display
+    // also needed for triggering something on display
     private OnFragmentInteraction listener;
 
     public interface OnFragmentInteraction
@@ -83,5 +82,5 @@ public class CardsList extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
-    } */
+    }
 }

@@ -25,7 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CardsList.OnFragmentInteraction {
 
     Spinner shopName;
     SeekBar discountValue;
@@ -99,15 +99,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // assert fragment != null;
         fragmentTransaction.replace(R.id.cardsFragment, fragment);  // TODO: Find out why CardDetails is not replaced
         fragmentTransaction.commit();
     }
 
-   /* something triggered on fragment display
+   // something triggered on fragment display
    @Override
     public void onViewClick(String p1) {
         Context context =null;
         //Toast.makeText(context,"",1).show();
         Toast.makeText(this, p1, Toast.LENGTH_LONG).show();
-    } */
+    }
 }
