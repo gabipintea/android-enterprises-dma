@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Spinner shopName;
     SeekBar discountValue;
     EditText expiryDate;
+    ListView cardsList;
 
     private static final String SHOP_NAME = "shopName";
     private static final String SHOP_ADDRESS = "shopAddress";
@@ -129,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onViewClick(String p1) {
         Context context =null;
         //Toast.makeText(context,"",1).show();
-        Toast.makeText(this, p1, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, p1, Toast.LENGTH_LONG).show();
+       //cardsList = (ListView) findViewById(R.id.cardslist);
+
     }
 }
