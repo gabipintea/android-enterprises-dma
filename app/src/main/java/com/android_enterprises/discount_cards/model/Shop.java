@@ -2,17 +2,36 @@ package com.android_enterprises.discount_cards.model;
 
 
 public class Shop {
+    long shopId;
+    int shopLogo;
     String shopName = "";
     String address = "";
     shopType type = shopType.general;
 
-    public Shop(String shopName, String address, shopType type) {
+    public Shop(long shopId, String shopName, String address, shopType type) {
+        this.shopId = shopId;
         this.shopName = shopName;
         this.address = address;
         this.type = shopType.general;
     }
 
     public Shop() {
+    }
+
+    public long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(long shopId) {
+        this.shopId = shopId;
+    }
+
+    public int getShopLogo() {
+        return shopLogo;
+    }
+
+    public void setShopLogo(int shopLogo) {
+        this.shopLogo = shopLogo;
     }
 
     public String getShopName() {
