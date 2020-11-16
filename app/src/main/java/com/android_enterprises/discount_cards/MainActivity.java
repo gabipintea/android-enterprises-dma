@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,17 +25,37 @@ import com.android_enterprises.discount_cards.model.shopType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CardsList.OnFragmentInteraction {
 
     Spinner shopName;
     SeekBar discountValue;
     EditText expiryDate;
+    ListView cardsList;
+
+    private static final String SHOP_NAME = "shopName";
+    private static final String SHOP_ADDRESS = "shopAddress";
+    private static final String SHOP_LOGO = "shopLogo";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        shopName = (Spinner) findViewById(R.id.shopSpinner);
+        Shop s1 = new Shop(100, "Kaufland", "Dorobanti", shopType.Food);
+        Shop s2 = new Shop(200, "Lidl", "Pipera", shopType.Food);
+        Shop s3 = new Shop(300, "Carrefour", "Unirii", shopType.Food);
+        Map<Long, Shop> shopMap = new HashMap<>();
+        shopMap.put(s1.getShopId(), s1);
+        shopMap.put(s2.getShopId(), s2);
+        shopMap.put(s3.getShopId(), s3);
+
+        ShopAdapter shopAdapter = new ShopAdapter(shopMap, this);
+        shopName.setAdapter(shopAdapter);
 
         Button btnAdd = findViewById(R.id.btnAddCard);
         btnAdd.setOnClickListener(this);
@@ -80,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view.getId() == R.id.btnAddCard) {
             shopName = (Spinner) findViewById(R.id.shopSpinner);
-            Shop shop = new Shop(shopName.getSelectedItem().toString(), "Dorobanti", shopType.Food);
+
+            Shop shop = new Shop(shopName.getSelectedItemId(), shopName.getSelectedItem().toString(), "Dorobanti", shopType.Food);
 
             discountValue = (SeekBar) findViewById(R.id.discountValue);
             expiryDate = (EditText) findViewById(R.id.expiryDate);
@@ -100,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         // assert fragment != null;
-        fragmentTransaction.replace(R.id.cardsFragment, fragment);  // TODO: Find out why CardDetails is not replaced
+        fragmentTransaction.replace(R.id.cardsFragment, fragment);
         fragmentTransaction.commit();
     }
 
@@ -109,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onViewClick(String p1) {
         Context context =null;
         //Toast.makeText(context,"",1).show();
-        Toast.makeText(this, p1, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, p1, Toast.LENGTH_LONG).show();
+       //cardsList = (ListView) findViewById(R.id.cardslist);
+
     }
 }

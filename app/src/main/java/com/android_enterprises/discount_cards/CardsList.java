@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.android_enterprises.discount_cards.model.DiscountCard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CardsList#newInstance} factory method to
@@ -19,15 +22,15 @@ import com.android_enterprises.discount_cards.model.DiscountCard;
  */
 public class CardsList extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-   //  private static final String ARG_PARAM2 = "param2";
+
     private static View displayedView;
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     // private String mParam2;
+
+    private static List<DiscountCard> cardsList = new ArrayList<DiscountCard>();
 
     public CardsList() {
         // Required empty public constructor
@@ -40,6 +43,7 @@ public class CardsList extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, discountCard.toString());
         fragment.setArguments(args);
+        cardsList.add(discountCard);
         return fragment;
     }
 
@@ -49,6 +53,7 @@ public class CardsList extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             // mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -58,7 +63,7 @@ public class CardsList extends Fragment {
         // Inflate the layout for this fragment
         displayedView = inflater.inflate(R.layout.fragment_cards_list, container, false);
         listener.onViewClick(mParam1); // triggering a method on display
-        return displayedView;   // TODO: Find out why this fragment does appear at the bottom
+        return displayedView;
     }
 
     // also needed for triggering something on display
