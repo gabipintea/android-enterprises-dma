@@ -7,9 +7,10 @@
     tools:context=".CardsList"
     android:background="#ffffff">
 
-    <ListView
+    <GridView
         android:id="@+id/cardslist"
+        android:numColumns="2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:entries="@array/shop_list" />
+        android:layout_height="match_parent" />
+
 </FrameLayout>

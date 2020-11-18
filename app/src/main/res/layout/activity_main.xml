@@ -17,6 +17,7 @@
 
     <Button
         android:id="@+id/btnAddCard"
+        android:onClick="showDetails"
         style="@android:style/Widget.Holo.Button"
         android:layout_width="240dp"
         android:layout_height="86dp"

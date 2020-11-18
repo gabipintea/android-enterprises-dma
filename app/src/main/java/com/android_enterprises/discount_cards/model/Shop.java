@@ -7,6 +7,7 @@ public class Shop {
     String shopName = "";
     String address = "";
     shopType type = shopType.general;
+    String logoUrl = "";
 
     public Shop(long shopId, String shopName, String address, shopType type) {
         this.shopId = shopId;
@@ -15,7 +16,22 @@ public class Shop {
         this.type = shopType.general;
     }
 
+    public Shop(long shopId, String shopName, String address, shopType type, String logoUrl) {
+        this.shopId = shopId;
+        this.shopName = shopName;
+        this.address = address;
+        this.type = type;
+        this.logoUrl = logoUrl;
+    }
+
     public Shop() {
+    }
+
+    public Shop(Shop s1, int i) {
+        this.shopId =s1.getShopId()+ i;
+        this.shopName = s1.shopName;
+        this.shopLogo = s1.getShopLogo();
+        this.logoUrl = s1.logoUrl;
     }
 
     public long getShopId() {
@@ -28,6 +44,10 @@ public class Shop {
 
     public int getShopLogo() {
         return shopLogo;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
     public void setShopLogo(int shopLogo) {
