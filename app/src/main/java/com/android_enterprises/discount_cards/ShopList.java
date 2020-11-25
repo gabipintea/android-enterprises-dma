@@ -2,19 +2,32 @@ package com.android_enterprises.discount_cards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.GridView;
 import android.widget.Spinner;
 
 import com.android_enterprises.discount_cards.model.Shop;
 import com.android_enterprises.discount_cards.model.shopType;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShopList extends AppCompatActivity {
 
     GridView gridView;
+    private static List<Shop> shopList = new ArrayList<Shop>();
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +49,41 @@ public class ShopList extends AppCompatActivity {
 
         ShopAdapter shopAdapter = new ShopAdapter(shopMap, this);
         gridView.setAdapter(shopAdapter);
+
+        shopList.add(s1);
+        shopList.add(s2);
+        shopList.add(s3);
+
+
+        try {
+            JSONObject jsonTBS = new JSONObject();
+            JSONArray jsonShops = new JSONArray();
+            for(int index=0; index<3;index++) {
+                JSONObject jsonShop = new JSONObject();
+                jsonShop.put("shopId", shopList.get(index).getShopId());
+                jsonShop.put("shopName", shopList.get(index).getShopName());
+                jsonShop.put("address", shopList.get(index).getAddress());
+                jsonShop.put("logoUrl", shopList.get(index).getLogoUrl());
+                jsonShops.put(jsonShop);
+            }
+            jsonTBS.put("Gabriel", jsonShops);
+
+            UploadAsync uploadAsync = new UploadAsync()
+            {
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    Log.d(TAG, "Value: " + s);
+
+                }
+            };
+            uploadAsync.execute("http://167.99.143.42/upload", "gabriel", jsonTBS.toString());
+
+            Log.d(TAG, jsonTBS.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

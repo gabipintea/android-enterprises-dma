@@ -88,19 +88,19 @@ public class ShopAdapter extends BaseAdapter {
         {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                Log.d(TAG, "----------image received from thread------------");
+                //Log.d(TAG, "----------image received from thread------------");
                 Bundle data = msg.getData();
                 Bitmap image = data.getParcelable("image");
                 holder.logo.setImageBitmap(image);
             }
         };
 
-        Log.d(TAG, "----------downloadImage method------------");
+        //Log.d(TAG, "----------downloadImage method------------");
 
         Thread downloadThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "----------download content run------------");
+                //Log.d(TAG, "----------download content run------------");
                 HttpURLConnection httpURLConnection = null;
                 try {
                     URL url = new URL(shop.getLogoUrl());
@@ -119,7 +119,7 @@ public class ShopAdapter extends BaseAdapter {
                             bundle.putParcelable("image", bitmap);
                             message.setData(bundle);
                             handler.sendMessage(message);
-                            Log.d(TAG, "----------download finished with success------------");
+                            //Log.d(TAG, "----------download finished with success------------");
                         }
                     }
                 } catch (Exception e) {
@@ -128,7 +128,7 @@ public class ShopAdapter extends BaseAdapter {
             }
         });
         downloadThread.start();
-        Log.d(TAG, "----------download thread started------------");
+        //Log.d(TAG, "----------download thread started------------");
 
         return view;
     }
