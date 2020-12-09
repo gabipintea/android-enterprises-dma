@@ -3,9 +3,16 @@ package com.android_enterprises.discount_cards.model;
 import java.util.Date;
 
 public class DiscountCard {
-    static Shop shop = new Shop();
-    static float discount = 1;
-    static Date expiryDate = new Date();
+    long shopId = -1;
+    Shop shop = new Shop();
+    float discount = 1;
+    Date expiryDate = new Date();
+
+    public DiscountCard(long shopId, float discount, Date expiryDate) {
+        this.shopId = shopId;
+        this.discount = discount;
+        this.expiryDate = expiryDate;
+    }
 
     public DiscountCard(Shop shop, float discount) {
         this.shop = shop;

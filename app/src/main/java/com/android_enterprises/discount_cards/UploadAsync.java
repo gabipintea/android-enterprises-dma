@@ -24,7 +24,7 @@ public class UploadAsync extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        Log.d(TAG, "DoinBack");
+        //Log.d(TAG, "DoinBack");
         String result = null;
         String fileName = strings[1];
         HttpURLConnection conn = null;
@@ -36,11 +36,11 @@ public class UploadAsync extends AsyncTask<String, Void, String> {
 
 
             if(connection instanceof HttpURLConnection) {
-                Log.d(TAG, "Before opening");
+                //Log.d(TAG, "Before opening");
                 conn = (HttpURLConnection) connection;
 
 
-                Log.d(TAG, "Opened");
+                //Log.d(TAG, "Opened");
                 conn.setDoInput(true); // Allow Inputs
                 conn.setDoOutput(true); // Allow Outputs
                 conn.setUseCaches(false); // Don't use a Cached Copy

@@ -66,20 +66,20 @@ public class MainActivity extends AppCompatActivity {
     // Passing args between activities
     public void showDetails(View view) {
 
-        Intent intent = new Intent(this, ShopList.class);
+        Intent intent = new Intent(this, ShowDetails.class);
 
-//        shopName = (Spinner)findViewById(R.id.shopSpinner);
-//        discountValue = (SeekBar)findViewById(R.id.discountValue);
-//        expiryDate   = (EditText)findViewById(R.id.expiryDate);
-//
-//        Bundle bundle = new Bundle();
-//
-//        bundle.putString("shopName", shopName.getSelectedItem().toString());
-//        bundle.putString("discountValue", String.valueOf(discountValue.getProgress()));
-//        bundle.putString("expiryDate", expiryDate.getText().toString());
-//        intent.putExtras(bundle);
+        shopName = (Spinner)findViewById(R.id.shopSpinner);
+        discountValue = (SeekBar)findViewById(R.id.discountValue);
+        expiryDate   = (EditText)findViewById(R.id.expiryDate);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putLong("shopId", shopName.getSelectedItemId());
+        bundle.putString("discountValue", String.valueOf(discountValue.getProgress()));
+        bundle.putString("expiryDate", expiryDate.getText().toString());
+        intent.putExtras(bundle);
 //        intent.putExtra("param1", "Text from main");
-      startActivity(intent);
+        startActivity(intent);
         //startActivityForResult(intent, 100);
     }
 
