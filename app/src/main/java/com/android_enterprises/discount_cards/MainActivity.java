@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String SHOP_ADDRESS = "shopAddress";
     private static final String SHOP_LOGO = "shopLogo";
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Button btnAdd = findViewById(R.id.btnAddCard);
         //btnAdd.setOnClickListener(this);
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String strUserName = SP.getString("username", "NA");
+        boolean bAppUpdates = SP.getBoolean("couponNotifications",false);
+        String cardsType = SP.getString("cardsType","1");
+
+        Log.d(TAG, strUserName);
+        Log.d(TAG, bAppUpdates?"true":"false");
+        Log.d(TAG, cardsType);
+        Toast.makeText(this, "Welcome back, " + strUserName, Toast.LENGTH_LONG).show();
     }
 
     // Passing args between activities
@@ -81,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
 //        intent.putExtra("param1", "Text from main");
         startActivity(intent);
         //startActivityForResult(intent, 100);
+    }
+
+    public void showSettings(View view) {
+        Intent intent = new Intent(this, MyPreferenceActivity.class);
+        startActivity(intent);
     }
 
 //    @Override

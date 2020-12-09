@@ -15,15 +15,32 @@
         android:layout_weight="1"
         tools:layout="@layout/fragment_card_details" />
 
-    <Button
-        android:id="@+id/btnAddCard"
-        android:onClick="showDetails"
-        style="@android:style/Widget.Holo.Button"
-        android:layout_width="240dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:layout_gravity="center"
-        android:background="@color/perfectBlue"
-        android:text="@string/add_card_title"
-        android:textAlignment="center" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAddCard"
+            style="@android:style/Widget.Holo.Button"
+            android:layout_width="307dp"
+            android:layout_height="86dp"
+            android:layout_gravity="center"
+            android:background="@color/perfectBlue"
+            android:onClick="showDetails"
+            android:text="@string/add_card_title"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            style="@android:style/Widget.Holo.Button"
+            android:layout_width="107dp"
+            android:layout_height="86dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="showSettings"
+            android:text="@string/settings"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </LinearLayout>
