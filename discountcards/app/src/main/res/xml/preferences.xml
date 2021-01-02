@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="Communication">
+        <EditTextPreference
+            android:key="username"
+            android:summary="Please provide your username"
+            android:title="Username" />
+
+        <EditTextPreference
+            android:key="email"
+            android:summary="Please provide your email"
+            android:title="Email" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Notifications" android:key="notificationsCategory" android:dependency="email">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="couponNotifications"
+            android:summary="Do you want the latest offers?"
+            android:title="Coupon Notifications" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Options">
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/listArray"
+            android:entryValues="@array/listValues"
+            android:key="cardsType"
+            android:summary="Select the kind of layout that you would like for showing the cards"
+            android:title="Cards Layout" />
+    </PreferenceCategory>
+</PreferenceScreen>
