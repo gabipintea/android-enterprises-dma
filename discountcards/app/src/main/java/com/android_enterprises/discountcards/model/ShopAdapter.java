@@ -70,7 +70,6 @@ public class ShopAdapter extends BaseAdapter {
             holder = new ShopViewHolder();
             holder.logo = view.findViewById(R.id.logoView);
             holder.name = view.findViewById(R.id.tvName);
-            holder.address = view.findViewById(R.id.tvAddress);
             view.setTag(holder);
         }
         else {
@@ -78,7 +77,6 @@ public class ShopAdapter extends BaseAdapter {
         }
         final Shop shop = shopList.get(getItemId(i));
         holder.name.setText(shop.getShopName());
-        holder.address.setText(shop.getAddress());
         //static
         //int logo = context.getResources().getIdentifier("logo_" + shop.getShopId(), "drawable", context.getPackageName());
         //holder.logo.setImageDrawable(context.getResources().getDrawable(logo));

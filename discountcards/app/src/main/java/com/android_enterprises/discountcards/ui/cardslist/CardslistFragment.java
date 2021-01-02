@@ -24,9 +24,9 @@ import java.util.List;
  */
 public class CardslistFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
 
     public static final List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
@@ -36,16 +36,16 @@ public class CardslistFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CardslistFragment() {
-        //TODO take an array of DiscountCards as parameter from database
-        DiscountCard c1 = new DiscountCard(100, 50, "2020-01-01");
-        DiscountCard c2 = new DiscountCard(200, 80, "2021-01-01");
-        DiscountCard c3 = new DiscountCard(300, 45, "2022-01-01");
+        //TODO populate an array of DiscountCards from database based on the current User (from SharedPreferences)
+        DiscountCard c1 = new DiscountCard(100, "gabi@gmail.com", 50, "2020-01-01");
+        DiscountCard c2 = new DiscountCard(200, "gabi@gmail.com", 80, "2021-01-01");
+        DiscountCard c3 = new DiscountCard(300, "gabi@gmail.com", 45, "2022-01-01");
         discountCards.add(c1);
         discountCards.add(c2);
         discountCards.add(c3);
     }
 
-    // TODO: Customize parameter initialization
+
     @SuppressWarnings("unused")
     public static CardslistFragment newInstance(int columnCount) {
         CardslistFragment fragment = new CardslistFragment();

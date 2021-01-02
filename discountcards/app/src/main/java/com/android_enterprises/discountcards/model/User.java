@@ -9,7 +9,6 @@ public class User {
     String lastName = "";
     Date birthday = new Date();
     String email = "";
-    List<DiscountCard> DiscountCards = new ArrayList<DiscountCard>();
 
     public User(String firstName, String lastName, Date birthday, String email) {
         this.firstName = firstName;
@@ -53,14 +52,6 @@ public class User {
         this.email = email;
     }
 
-    public List<DiscountCard> getDiscountCards() {
-        return DiscountCards;
-    }
-
-    public void setDiscountCards(List<DiscountCard> discountCards) {
-        DiscountCards = discountCards;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -68,7 +59,6 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
-                ", DiscountCards=" + DiscountCards +
                 '}';
     }
 }

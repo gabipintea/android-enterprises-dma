@@ -4,37 +4,30 @@ import java.util.Date;
 
 public class DiscountCard {
     long shopId = -1;
-    //Shop shop = new Shop();
+    String userEmail = "";
     float discount = 1;
     String expiryDate = "";
 
-    public DiscountCard(long shopId, float discount, String expiryDate) {
+    public DiscountCard(long shopId, String email, float discount, String expiryDate) {
         this.shopId = shopId;
+        this.userEmail = email;
         this.discount = discount;
         this.expiryDate = expiryDate;
     }
 
-//    public DiscountCard(Shop shop, float discount) {
-//        this.shop = shop;
-//        this.discount = discount;
-//    }
-//
-//    public DiscountCard(Shop shop, float discount, Date expiryDate) {
-//        this.shop = shop;
-//        this.discount = discount;
-//        this.expiryDate = expiryDate;
-//    }
-
-
-//    public Shop getShop() {
-//        return shop;
-//    }
-
     public long getShopId() { return shopId; }
 
-//    public void setShop(Shop shop) {
-//        this.shop = shop;
-//    }
+    public void setShopId(long shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
     public float getDiscount() {
         return discount;
@@ -63,7 +56,7 @@ public class DiscountCard {
     public Shop getShop() {
         //TODO Extract shop from database based on shopId
 
-        Shop shop = new Shop(this.getShopId(), "Kaufland", "Dorobanti", shopType.Food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+        Shop shop = new Shop(this.getShopId(), "Kaufland", shopType.Food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
         return shop;
     }
 }

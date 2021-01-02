@@ -62,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //TODO maybe this username can be used for DB lookups? or it's email address?
         String strUserName = SP.getString("username", "NA");
+
         boolean couponNotifications = SP.getBoolean("couponNotifications",false);
         String cardsType = SP.getString("cardsType","1");
         Toast.makeText(this, "Welcome back, " + strUserName, Toast.LENGTH_LONG).show();
