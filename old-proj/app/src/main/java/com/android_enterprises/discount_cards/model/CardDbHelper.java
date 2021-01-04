@@ -42,6 +42,5 @@ public class CardDbHelper extends SQLiteOpenHelper {
         cv.put(CardsTable.COLUMN_JSONCARD, card.toString());
         Long value = db.insert(CardsTable.TABLE_TODO, null, cv);
         Log.d("DatabaseOperation", value.toString());
-
     }
 }

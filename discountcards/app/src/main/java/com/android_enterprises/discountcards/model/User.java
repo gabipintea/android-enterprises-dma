@@ -8,10 +8,10 @@ public class User {
     long id;
     String firstName = "";
     String lastName = "";
-    Date birthday = new Date();
+    String birthday = "";
     String email = "";
 
-    public User(long id, String firstName, String lastName, Date birthday, String email) {
+    public User(long id, String firstName, String lastName, String birthday, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,11 +42,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
