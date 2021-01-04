@@ -26,4 +26,9 @@
     <string name="select_discount">Choose Discount (%)</string>
     <string name="expiry_date">Choose Expiry Date</string>
     <string name="menu_cardsview">Cards View</string>
+    <string name="menu_backup">Backup</string>
+    <string name="local_export">Local Export</string>
+    <string name="local_import">Local Import</string>
+    <string name="online_backup">Online Backup</string>
+    <string name="restore_backup">Restore Backup</string>
 </resources>

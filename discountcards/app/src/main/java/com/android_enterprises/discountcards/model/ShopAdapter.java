@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.Map;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class ShopAdapter extends BaseAdapter {
+    //private static final String TAG = ShopAdapter.class.getSimpleName();
 
     public Map<Long, Shop> shopList;
     public LayoutInflater layoutInflater;
@@ -57,7 +59,7 @@ public class ShopAdapter extends BaseAdapter {
     private static class ShopViewHolder
     {
         public ImageView logo;
-        public TextView name, address;
+        public TextView name;
     }
 
     @Override

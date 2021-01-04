@@ -17,5 +17,11 @@
             android:title="@string/menu_cardslist"
             android:visible="true"/>
 
+        <item
+            android:id="@+id/nav_backup"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_backup"
+            android:visible="true"/>
+
     </group>
 </menu>
