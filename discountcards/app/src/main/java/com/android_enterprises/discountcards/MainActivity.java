@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-        //TODO maybe this username can be used for DB lookups? or it's email address?
         String strUserName = SP.getString("username", "NA");
 
         boolean couponNotifications = SP.getBoolean("couponNotifications",false);
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         userSpinner = (Spinner) headerView.findViewById(R.id.userSpinner);
 
-        //TODO bring users from DB and put them in a map for the spinner
+        //TODO bring users from DB and put them in a map for the spinner (see DBHelper)
 //        Date birthdayDate = stringToDate("2020/01/01", "yyyy/MM/dd");
 
         //Log.d(TAG, String.valueOf(birthdayDate));

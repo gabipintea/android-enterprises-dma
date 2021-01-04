@@ -107,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("shopName", shName);
-        contentValues.put("type", String.valueOf(type));
+        contentValues.put("shopType", String.valueOf(type));
         contentValues.put("logoURL", logo);
         long result = db.insert("Shops", null, contentValues);
         if (result == -1)
@@ -119,7 +119,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("shopName", shName);
-        contentValues.put("type", String.valueOf(type));
+        contentValues.put("shopType", String.valueOf(type));
         contentValues.put("logoURL", logo);
 
         Cursor cursor = db.rawQuery("Select * from Shops where shopId = ?", new String[]{String.valueOf(id)});
@@ -159,6 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("Select * from Shops where shopId=?", new String[]{String.valueOf(shopId)});
 
+        cursor.moveToFirst();
         String shopName = cursor.getString(1);
         shopType type = shopType.fromId(cursor.getInt(2));
         String logoURL = cursor.getString(3);
@@ -233,15 +234,16 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    //TODO IDEM for getShops and getUsers
     public ArrayList<DiscountCard> getUserCards(String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("Select * from Cards where userEmail=?", new String[]{userEmail});
+        cursor.moveToFirst();
 
         ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
 
         while(cursor.moveToNext()){
-
             long shopId = cursor.getInt(0);
             int discount = cursor.getInt(2);
             String expiryDate = cursor.getString(3);
