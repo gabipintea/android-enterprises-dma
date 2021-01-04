@@ -113,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
         userSpinner = (Spinner) headerView.findViewById(R.id.userSpinner);
 
         //TODO bring users from DB and put them in a map for the spinner
-        Date birthdayDate = stringToDate("2020/01/01", "yyyy/MM/dd");
+//        Date birthdayDate = stringToDate("2020/01/01", "yyyy/MM/dd");
 
         //Log.d(TAG, String.valueOf(birthdayDate));
-        User u1 = new User(1,"John", "Doe", birthdayDate, "john.doe@gmail.com");
-        User u2 = new User(2,"Xi", "Cho", birthdayDate, "xi.cho@gmail.com");
-        User u3 = new User(3,"Franck", "Stank", birthdayDate, "franck.stank@gmail.com");
+        User u1 = new User(1,"John", "Doe", "01/01/2000", "john.doe@gmail.com");
+        User u2 = new User(2,"Xi", "Cho", "01/01/2000", "xi.cho@gmail.com");
+        User u3 = new User(3,"Franck", "Stank", "01/01/2000", "franck.stank@gmail.com");
 
         Map<Long, User> userMap = new HashMap<>();
         userMap.put(u1.getId(), u1);

@@ -98,7 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String lName = cursor.getString(1);
         String birthday = cursor.getString(3);
 
-        User user = new User(fName, lName, birthday, mail);
+        User user = new User(0, fName, lName, birthday, mail);
 
         return user;
     }
