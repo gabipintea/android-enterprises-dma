@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 public class AddFragment extends Fragment {
 
@@ -17,7 +16,7 @@ public class AddFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        return inflater.inflate(R.layout.fragment_add, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

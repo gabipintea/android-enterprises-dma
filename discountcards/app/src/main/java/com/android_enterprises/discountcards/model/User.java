@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
+    long id;
     String firstName = "";
     String lastName = "";
     Date birthday = new Date();
     String email = "";
 
-    public User(String firstName, String lastName, Date birthday, String email) {
+    public User(long id, String firstName, String lastName, Date birthday, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -18,6 +20,10 @@ public class User {
     }
 
     public User() {
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {

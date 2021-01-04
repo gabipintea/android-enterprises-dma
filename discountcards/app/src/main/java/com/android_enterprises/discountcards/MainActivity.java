@@ -8,8 +8,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android_enterprises.discountcards.model.Shop;
+import com.android_enterprises.discountcards.model.ShopAdapter;
+import com.android_enterprises.discountcards.model.User;
+import com.android_enterprises.discountcards.model.UserAdapter;
+import com.android_enterprises.discountcards.model.shopType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,6 +27,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -30,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static NavController navController;
 
 
+    Spinner userSpinner;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -95,6 +108,41 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "NOT FOUND dar vrea lista");
             }
         }
+
+        View headerView = navigationView.getHeaderView(0);
+        userSpinner = (Spinner) headerView.findViewById(R.id.userSpinner);
+
+        //TODO bring users from DB and put them in a map for the spinner
+        Date birthdayDate = stringToDate("2020/01/01", "yyyy/MM/dd");
+
+        //Log.d(TAG, String.valueOf(birthdayDate));
+        User u1 = new User(1,"John", "Doe", birthdayDate, "john.doe@gmail.com");
+        User u2 = new User(2,"Xi", "Cho", birthdayDate, "xi.cho@gmail.com");
+        User u3 = new User(3,"Franck", "Stank", birthdayDate, "franck.stank@gmail.com");
+
+        Map<Long, User> userMap = new HashMap<>();
+        userMap.put(u1.getId(), u1);
+        userMap.put(u2.getId(), u2);
+        userMap.put(u3.getId(), u3);
+        Log.d(TAG, String.valueOf(userMap.size()));
+
+        if ( userSpinner != null ) {
+            UserAdapter userAdapter = new UserAdapter(userMap, this);
+            userSpinner.setAdapter(userAdapter);
+        } else {
+            Log.d(TAG, "No User Spinner found");
+        }
+
+    }
+
+    private Date stringToDate(String aDate,String aFormat) {
+
+        if(aDate==null) return null;
+        ParsePosition pos = new ParsePosition(0);
+        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
+        Date stringDate = simpledateformat.parse(aDate, pos);
+        return stringDate;
+
     }
 
 
@@ -117,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 itemCardslist.setVisible(false);
                 itemCardsview.setVisible(true);
                 navController.getGraph().setStartDestination(R.id.nav_cardsview);
+                navController.navigate(R.id.nav_cardsview);
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea carduri");
@@ -127,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 itemCardslist.setVisible(true);
                 itemCardsview.setVisible(false);
                 navController.getGraph().setStartDestination(R.id.nav_cardslist);
+                navController.navigate(R.id.nav_cardslist);
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea lista");
