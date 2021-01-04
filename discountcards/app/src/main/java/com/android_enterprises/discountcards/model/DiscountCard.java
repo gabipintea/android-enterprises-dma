@@ -1,14 +1,16 @@
 package com.android_enterprises.discountcards.model;
 
+import com.android_enterprises.discountcards.DBHelper;
+
 import java.util.Date;
 
 public class DiscountCard {
     long shopId = -1;
     String userEmail = "";
-    float discount = 1;
+    int discount = 1;
     String expiryDate = "";
 
-    public DiscountCard(long shopId, String email, float discount, String expiryDate) {
+    public DiscountCard(long shopId, String email, int discount, String expiryDate) {
         this.shopId = shopId;
         this.userEmail = email;
         this.discount = discount;
@@ -29,11 +31,11 @@ public class DiscountCard {
         this.userEmail = userEmail;
     }
 
-    public float getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -56,7 +58,11 @@ public class DiscountCard {
     public Shop getShop() {
         //TODO Extract shop from database based on shopId
 
-        Shop shop = new Shop(this.getShopId(), "Kaufland", shopType.Food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+        Shop shop = new Shop(this.getShopId(), "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+
+
+
+
         return shop;
     }
 }

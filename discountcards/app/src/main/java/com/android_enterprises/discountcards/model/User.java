@@ -7,10 +7,10 @@ import java.util.List;
 public class User {
     String firstName = "";
     String lastName = "";
-    Date birthday = new Date();
     String email = "";
+    String birthday = "";
 
-    public User(String firstName, String lastName, Date birthday, String email) {
+    public User(String firstName, String lastName, String birthday, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -36,11 +36,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

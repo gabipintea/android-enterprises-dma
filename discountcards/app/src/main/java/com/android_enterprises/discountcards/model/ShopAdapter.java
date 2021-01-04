@@ -27,9 +27,9 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class ShopAdapter extends BaseAdapter {
 
-    Map<Long, Shop> shopList;
-    LayoutInflater layoutInflater;
-    Context context;
+    public Map<Long, Shop> shopList;
+    public LayoutInflater layoutInflater;
+    public Context context;
 
     public ShopAdapter(Map<Long, Shop> shopList, Context context) {
         this.shopList = shopList;
