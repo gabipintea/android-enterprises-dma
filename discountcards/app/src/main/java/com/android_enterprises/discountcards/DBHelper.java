@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -16,6 +17,7 @@ import com.android_enterprises.discountcards.model.shopType;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private static final String TAG = DBHelper.class.getSimpleName();
     public DBHelper(@Nullable Context context) {
         super(context, "DiscountCards.db", null, 1);
     }
@@ -36,6 +38,21 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public Boolean insertSampleData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("drop Table if exists Users");
+        db.execSQL("drop Table if exists Shops");
+        db.execSQL("drop Table if exists Cards");
+        db.execSQL("create Table Users(firstName TEXT, lastName TEXT, email TEXT PRIMARY KEY, birthday DATE)");
+        db.execSQL("create Table Shops(shopId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, shopName TEXT, shopType INTEGER, logoURL TEXT)");
+        db.execSQL("create Table Cards(shopId INTEGER REFERENCES Shops (shopId), userEmail TEXT REFERENCES Users (email), discount INTEGER, expiryDate DATE)");
+
+        boolean insertedShops = insertSampleShops();
+        boolean insertedUsers = insertSampleUsers();
+        boolean insertedCards = insertSampleCards();
+
+        return insertedShops && insertedUsers && insertedCards;
+    }
     public Boolean registerUser(String fName, String lName, String mail, String bDay) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -121,8 +138,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Boolean insertSampleUsers() {
-        boolean registered = false;
+        boolean deleted = deleteUser("john.doe@gmail.com");
+        deleted = deleteUser("xi.cho@gmail.com");
+        deleted = deleteUser("franck.stank@gmail.com");
 
+        boolean registered = false;
         registered = registerUser("John", "Doe", "john.doe@gmail.com", "01/02/1996");
         registered = registerUser("Xi", "Cho", "xi.cho@gmail.com", "01/02/1998");
         registered = registerUser("Franck", "Stank", "franck.stank@gmail.com", "01/02/1999");
@@ -190,6 +210,30 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
+    public Boolean deleteShopByName(String shopName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from Shops where shopName = ?", new String[]{shopName});
+
+        if (cursor.getCount() > 0) {
+            long result = db.delete("Shops", "shopName=?", new String[]{shopName});
+            if (result == -1)
+                return false;
+            else return true;
+        } else return false;
+    }
+
+    public Boolean insertSampleShops() {
+        boolean deleted = deleteShopByName("Lidl");
+        deleted = deleteShopByName("Carrefour");
+        deleted = deleteShopByName("Kaufland");
+
+        boolean inserted = registerShop("Lidl", shopType.food,"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+        inserted = registerShop("Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
+        inserted = registerShop("Kaufland", shopType.general, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+        return inserted;
+    }
+
 //    public Cursor getShops() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //
@@ -206,17 +250,50 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Shop> shops = new ArrayList<Shop>();
 
         cursor.moveToFirst();
+        long shopId = cursor.getInt(0);
+        String shopName = cursor.getString(1);
+        shopType type = shopType.fromId(cursor.getInt(2));
+        String logoUrl = cursor.getString(3);
+
+        shops.add(new Shop(shopId, shopName, type, logoUrl));
         while(cursor.moveToNext()){
 
-            long shopId = cursor.getInt(0);
-            String shopName = cursor.getString(1);
-            shopType type = shopType.fromId(cursor.getInt(2));
-            String logoUrl = cursor.getString(3);
+            shopId = cursor.getInt(0);
+            shopName = cursor.getString(1);
+            type = shopType.fromId(cursor.getInt(2));
+            logoUrl = cursor.getString(3);
 
             shops.add(new Shop(shopId, shopName, type, logoUrl));
         }
 
         return shops;
+    }
+
+    public boolean deleteAllShopsButLetOne() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long shopId=1;
+        boolean inserted = false;
+        boolean deleted = deleteCard(1, "john.doe@gmail.com");
+        deleted = deleteCard(1, "xi.cho@gmail.com");
+        deleted = deleteCard(1, "franck.stank@gmail.com");
+
+        db.execSQL("DELETE FROM Shops");
+
+        boolean registered = registerShop("Lidl", shopType.general, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+        if(registered) {
+            ArrayList<Shop> shops = new ArrayList<Shop>();
+            shops = getShops();
+
+            for(Shop shop : shops) {
+                shopId =  shop.getShopId();
+                Log.d(TAG, "The new shop ID: " + String.valueOf(shopId));
+                break;
+            }
+            inserted = createCard(shopId, "john.doe@gmail.com", 50, "20/20/2021");
+            inserted = createCard(shopId, "xi.cho@gmail.com", 12, "20/20/2025");
+            inserted = createCard(shopId, "franck.stank@gmail.com", 50, "20/20/2023");
+        }
+        return inserted;
     }
 
 
@@ -278,6 +355,19 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
+    public Boolean deleteCardByEmail(String userEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from Cards where userEmail = ?", new String[]{userEmail});
+
+        if (cursor.getCount() > 0) {
+            long result = db.delete("Cards", "userEmail = ?", new String[]{userEmail});
+            if (result == -1)
+                return false;
+            else return true;
+        } else return false;
+    }
+
     public Cursor getCards() {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -326,13 +416,21 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Boolean insertSampleCards() {
-        boolean deleted = deleteCard(1, "john.doe@gmail.com");
-        deleted = deleteCard(1, "xi.cho@gmail.com");
-        deleted = deleteCard(1, "franck.stank@gmail.com");
+        long shopId = -1;
+        boolean inserted = false;
 
-        boolean inserted = createCard(1, "john.doe@gmail.com", 50, "20/20/2021");
-        inserted = createCard(1, "xi.cho@gmail.com", 12, "20/20/2025");
-        inserted = createCard(1, "franck.stank@gmail.com", 50, "20/20/2023");
+        boolean deleted = deleteCardByEmail("john.doe@gmail.com");
+        deleted = deleteCardByEmail("xi.cho@gmail.com");
+        deleted = deleteCardByEmail("john.doe@gmail.com");
+
+        ArrayList<Shop> shops = new ArrayList<Shop>();
+        shops = getShops();
+
+        if(shops.size() == 3) {
+            inserted = createCard(shops.get(0).getShopId(), "john.doe@gmail.com", 50, "20/20/2021");
+            inserted = createCard(shops.get(1).getShopId(), "xi.cho@gmail.com", 12, "20/20/2025");
+            inserted = createCard(shops.get(2).getShopId(), "franck.stank@gmail.com", 50, "20/20/2023");
+        }
 
         return inserted;
     }

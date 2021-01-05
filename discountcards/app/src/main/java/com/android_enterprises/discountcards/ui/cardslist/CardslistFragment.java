@@ -65,16 +65,16 @@ public class CardslistFragment extends Fragment {
             discountCards.clear();
             discountCards = db.getUserCards(mEmail);
 
-            if( discountCards.size() < 1 ) {
-                boolean inserted = db.insertSampleCards();
-                if(inserted) {
-                    discountCards.clear();
-                    discountCards = db.getUserCards(mEmail);
-                    Toast.makeText(this.getContext(), String.valueOf(discountCards.size()), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this.getContext(), "Not inserted", Toast.LENGTH_LONG).show();
-                }
-            }
+//            if( discountCards.size() < 1 ) {
+//                boolean inserted = db.insertSampleCards();
+//                if(inserted) {
+//                    discountCards.clear();
+//                    discountCards = db.getUserCards(mEmail);
+//                    Toast.makeText(this.getContext(), String.valueOf(discountCards.size()), Toast.LENGTH_LONG).show();
+//                } else {
+//                    Toast.makeText(this.getContext(), "Not inserted", Toast.LENGTH_LONG).show();
+//                }
+//            }
 
         }
     }

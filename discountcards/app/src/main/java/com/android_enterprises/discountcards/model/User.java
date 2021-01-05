@@ -1,10 +1,13 @@
 package com.android_enterprises.discountcards.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+public class User implements Parcelable {
     long id;
     String firstName = "";
     String lastName = "";
@@ -21,6 +24,26 @@ public class User {
 
     public User() {
     }
+
+    protected User(Parcel in) {
+        id = in.readLong();
+        firstName = in.readString();
+        lastName = in.readString();
+        birthday = in.readString();
+        email = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -66,5 +89,19 @@ public class User {
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(firstName);
+        parcel.writeString(lastName);
+        parcel.writeString(birthday);
+        parcel.writeString(email);
     }
 }

@@ -38,7 +38,6 @@ import static java.net.HttpURLConnection.HTTP_OK;
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    //private final List<DummyItem> mValues;
     private final List<DiscountCard> mValues;
     private static final String TAG = MyItemRecyclerViewAdapter.class.getSimpleName();
     DBHelper db;
@@ -59,9 +58,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         final long shopId = mValues.get(position).getShopId();
 
         db = new DBHelper(holder.name.getContext());
-        //boolean registered = db.registerShop("Lidl", shopType.fromId(1), "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-
-
         final Shop shop = db.getShop(shopId);
 
         holder.mItem = mValues.get(position);
@@ -127,12 +123,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        //        public final TextView mIdView;
-//        public final TextView mContentView;
         public DiscountCard mItem;
 
         public final ImageView logo;
-        public final TextView name, discount;
+        public final TextView name;
 
         public ViewHolder(View view) {
             super(view);
@@ -142,7 +136,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
             logo = (ImageView) view.findViewById(R.id.logoView);
             name = (TextView) view.findViewById(R.id.tvName);
-            discount = (TextView) view.findViewById(R.id.tvDiscount);
+            //discount = (TextView) view.findViewById(R.id.tvDiscount);
             //expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
         }
 

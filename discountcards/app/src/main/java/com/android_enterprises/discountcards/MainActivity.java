@@ -20,6 +20,7 @@ import com.android_enterprises.discountcards.model.UserAdapter;
 import com.android_enterprises.discountcards.model.shopType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -60,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Insert sample data
+        //Uncomment the following lines
+        //Run the app
+        //Stop the app
+        //Comment the following lines
+        //Run the app
+        //#######################INSERT SCRIPT##############################
+//        db = new DBHelper(this);
+//        boolean insertedSample = db.insertSampleData();
+//        Log.d(TAG, String.valueOf(insertedSample));
+        //##################################################################
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddActivity.class);
+                i.putExtra("selectedUser", selectedUser);
                 startActivity(i);
             }
         });
@@ -91,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         final String[] cardsType = {SP.getString("cardsType", "1")};
         String username = SP.getString("username", "John");
         String email = SP.getString("email", "john.doe@gmail.com");
-        //Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
 
         bundle = new Bundle();
         bundle.putString("email", email);
@@ -141,20 +155,15 @@ public class MainActivity extends AppCompatActivity {
 //        User u3 = new User(3,"Franck", "Stank", "01/01/2000", "franck.stank@gmail.com");
 
         // Sample DB Data (uncomment the following lines to add at least three users)
-        if( users.size() < 3 ) {
-            //First delete all the sample data if there are present
-            boolean deleted = db.deleteUser("john.doe@gmail.com");
-            deleted = db.deleteUser("xi.cho@gmail.com");
-            deleted = db.deleteUser("franck.stank@gmail.com");
-
-            //Then register the sample users
-            boolean registered = db.insertSampleUsers();
-            if ( registered ) {
-                //Log.d(TAG, "Users registered");
-                users.clear();
-                users = db.getUsers();
-            }
-        }
+//        if( users.size() < 3 ) {
+//            //Then register the sample users
+//            boolean registered = db.insertSampleUsers();
+//            if ( registered ) {
+//                //Log.d(TAG, "Users registered");
+//                users.clear();
+//                users = db.getUsers();
+//            }
+//        }
 
         Map<Long, User> userMap = new HashMap<>();
         for ( User u : users) {

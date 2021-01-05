@@ -1,12 +1,16 @@
 package com.android_enterprises.discountcards;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.ShopAdapter;
+import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.model.shopType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,16 +22,22 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddActivity extends AppCompatActivity {
+
+    // Debugging TAG
+    private static final String TAG = AddActivity.class.getSimpleName();
 
     Spinner shopSpinner;
     SeekBar discountValue;
     EditText expiryDateField;
 
     DBHelper db;
+    List<Shop> shops = new ArrayList<Shop>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,14 @@ public class AddActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         db = new DBHelper(this);
+
+        Intent i = getIntent();
+        User selectedUser = (User)i.getParcelableExtra("selectedUser");
+        if(selectedUser != null ) {
+            Log.d(TAG, selectedUser.getEmail());
+        } else {
+            Log.d(TAG, "No USER arrived");
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,23 +75,31 @@ public class AddActivity extends AppCompatActivity {
                 int discount = discountValue.getProgress();
                 String expiryDate = String.valueOf(expiryDateField.getText());
 
-                boolean result = db.createCard(selectedShop.getShopId(),"andreimihai.sirbu@gmail.com", discount, expiryDate);
+                boolean result = db.createCard(selectedShop.getShopId(),selectedUser.getEmail(), discount, expiryDate);
                 if(result) {
-                    Toast.makeText(AddActivity.this, "Card added Successfully!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
                 }
-                //Log.i("AddActivity","Card added to db");
             }
         });
 
         shopSpinner = (Spinner) findViewById(R.id.shopSpinner);
-        //TODO bring shops from DB and put them in a map for the spinner (see DBHelper)
-        Shop s1 = new Shop(100, "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
-        Shop s2 = new Shop(200, "Lidl", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-        Shop s3 = new Shop(300, "Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
+
+        shops.clear();
+        shops = db.getShops();
+        //Toast.makeText(this, String.valueOf(shops.size()), Toast.LENGTH_LONG).show();
         Map<Long, Shop> shopMap = new HashMap<>();
-        shopMap.put(s1.getShopId(), s1);
-        shopMap.put(s2.getShopId(), s2);
-        shopMap.put(s3.getShopId(), s3);
+        for( Shop shop : shops) {
+            shopMap.put(shop.getShopId(), shop);
+        }
+
+//        Shop s1 = new Shop(100, "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+//        Shop s2 = new Shop(200, "Lidl", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+//        Shop s3 = new Shop(300, "Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
+//        Map<Long, Shop> shopMap = new HashMap<>();
+//        shopMap.put(s1.getShopId(), s1);
+//        shopMap.put(s2.getShopId(), s2);
+//        shopMap.put(s3.getShopId(), s3);
 
         ShopAdapter shopAdapter = new ShopAdapter(shopMap, this);
         shopSpinner.setAdapter(shopAdapter);

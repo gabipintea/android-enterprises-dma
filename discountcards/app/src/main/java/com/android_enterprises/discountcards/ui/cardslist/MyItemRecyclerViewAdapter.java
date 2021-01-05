@@ -55,14 +55,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         final long shopId = mValues.get(position).getShopId();
 
         db = new DBHelper(holder.name.getContext());
-        //boolean registered = db.registerShop("Lidl", shopType.fromId(1), "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-
-
         final Shop shop = db.getShop(shopId);
 
         holder.mItem = mValues.get(position);
-//        holder.mIdView.setText(String.valueOf(mValues.get(position).getShopId()));
-//        holder.mContentView.setText(String.valueOf(mValues.get(position).getDiscount()));
         holder.name.setText(shop.getShopName());
         holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()));
         holder.expiry.setText(String.valueOf(mValues.get(position).getExpiryDate()));
@@ -123,8 +118,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-//        public final TextView mIdView;
-//        public final TextView mContentView;
         public DiscountCard mItem;
 
         public final ImageView logo;
