@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         //Run the app
         //Stop the app
         //Comment the following lines
-        //Done! Run the app normally
+        //Done! Run the app as you wish
         //#######################INSERT SCRIPT##############################
 //        db = new DBHelper(this);
 //        boolean insertedSample = db.insertSampleData();
