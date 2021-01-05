@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent;
@@ -28,8 +30,10 @@ public class CardsviewFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
+    private String mEmail = "";
 
     public static final List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
+    DBHelper db;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -37,6 +41,7 @@ public class CardsviewFragment extends Fragment {
      */
     public CardsviewFragment() {
         //TODO populate an array of DiscountCards from database based on the current User (from SharedPreferences)
+        discountCards.clear();
         DiscountCard c1 = new DiscountCard(1, "gabi@gmail.com", 50, "2020-01-01");
         DiscountCard c2 = new DiscountCard(1, "gabi@gmail.com", 80, "2021-01-01");
         DiscountCard c3 = new DiscountCard(1, "gabi@gmail.com", 45, "2022-01-01");
@@ -61,6 +66,10 @@ public class CardsviewFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mEmail = getArguments().getString("email");
+            //Toast.makeText(this.getContext(), mEmail, Toast.LENGTH_LONG).show();
+            //db = new DBHelper(this.getContext());
+
         }
     }
 

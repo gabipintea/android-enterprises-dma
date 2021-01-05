@@ -37,6 +37,7 @@ public class CardslistFragment extends Fragment {
      */
     public CardslistFragment() {
         //TODO populate an array of DiscountCards from database based on the current User (from SharedPreferences)
+        discountCards.clear();
         DiscountCard c1 = new DiscountCard(1, "gabi@gmail.com", 50, "2020-01-01");
         DiscountCard c2 = new DiscountCard(1, "gabi@gmail.com", 80, "2021-01-01");
         DiscountCard c3 = new DiscountCard(1, "gabi@gmail.com", 45, "2022-01-01");

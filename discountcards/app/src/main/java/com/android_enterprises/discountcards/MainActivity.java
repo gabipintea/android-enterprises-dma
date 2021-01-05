@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.ShopAdapter;
 import com.android_enterprises.discountcards.model.User;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private static NavController navController;
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    private static String lastCardsType = "1";
 
     DBHelper db;
     User selectedUser;
@@ -89,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         String email = SP.getString("email", "john.doe@gmail.com");
         Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+
+
         //Change menuItem according to preference (list or cards)
         menuNav = navigationView.getMenu();
         itemCardslist = menuNav.findItem(R.id.nav_cardslist);
@@ -99,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
             if( itemCardslist != null && itemCardsview != null ) {
                 itemCardslist.setVisible(false);
                 itemCardsview.setVisible(true);
-                navController.getGraph().setStartDestination(R.id.nav_cardsview);
+                //navController.getGraph().setStartDestination(R.id.nav_cardsview);
+                navController.navigate(R.id.nav_cardsview, bundle);
+                lastCardsType = "1";
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea carduri");
@@ -109,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
             if( itemCardslist != null && itemCardsview != null ) {
                 itemCardslist.setVisible(true);
                 itemCardsview.setVisible(false);
-                navController.getGraph().setStartDestination(R.id.nav_cardslist);
+                //navController.getGraph().setStartDestination(R.id.nav_cardslist);
+                navController.navigate(R.id.nav_cardslist, bundle);
+                lastCardsType = "2";
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea lista");
@@ -204,25 +215,27 @@ public class MainActivity extends AppCompatActivity {
         String cardsType = SP.getString("cardsType","1");
 
 
-        if ( cardsType.equals("1") ) {
+        if ( cardsType.equals("1") && lastCardsType.equals("2") ) {
             //Log.d(TAG, "Vrea carduri");
 
             if( itemCardslist != null && itemCardsview != null ) {
                 itemCardslist.setVisible(false);
                 itemCardsview.setVisible(true);
-                navController.getGraph().setStartDestination(R.id.nav_cardsview);
+                //navController.getGraph().setStartDestination(R.id.nav_cardsview);
                 navController.navigate(R.id.nav_cardsview);
+                lastCardsType = "1";
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea carduri");
             }
-        } else if ( cardsType.equals("2") ){
+        } else if ( cardsType.equals("2") && lastCardsType.equals("1") ){
             //Log.d(TAG, "Vrea lista");
             if( itemCardslist != null && itemCardsview != null ) {
                 itemCardslist.setVisible(true);
                 itemCardsview.setVisible(false);
-                navController.getGraph().setStartDestination(R.id.nav_cardslist);
+                //navController.getGraph().setStartDestination(R.id.nav_cardslist);
                 navController.navigate(R.id.nav_cardslist);
+                lastCardsType = "2";
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea lista");

@@ -310,10 +310,15 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
 
         cursor.moveToFirst();
+        long shopId = cursor.getInt(0);
+        int discount = cursor.getInt(2);
+        String expiryDate = cursor.getString(3);
+
+        cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
         while(cursor.moveToNext()){
-            long shopId = cursor.getInt(0);
-            int discount = cursor.getInt(2);
-            String expiryDate = cursor.getString(3);
+            shopId = cursor.getInt(0);
+            discount = cursor.getInt(2);
+            expiryDate = cursor.getString(3);
 
             cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
         }
