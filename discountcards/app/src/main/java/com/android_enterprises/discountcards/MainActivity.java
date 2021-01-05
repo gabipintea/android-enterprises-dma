@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Insert sample data
         //Uncomment the following lines
+        //Comment line 146
         //Run the app
         //Stop the app
         //Comment the following lines
