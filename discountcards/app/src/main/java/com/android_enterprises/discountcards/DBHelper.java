@@ -81,13 +81,36 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
-    public Cursor getUsers() {
+//    public Cursor getUsers() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        Cursor cursor = db.rawQuery("Select * from Users", null);
+//
+//        return cursor;
+//    }
+
+    public ArrayList<User> getUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * from Users", null);
+        Cursor cursor = db.rawQuery("Select rowid, * from Users", null);
 
-        return cursor;
+        ArrayList<User> users = new ArrayList<User>();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()){
+
+            int id = cursor.getInt(0);
+            String fName = cursor.getString(1);
+            String lName = cursor.getString(2);
+            String email = cursor.getString(3);
+            String birthday = cursor.getString(4);
+
+            users.add(new User(id, fName, lName, birthday, email));
+        }
+
+        return users;
     }
+
 
     public User getUser(String mail) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -146,13 +169,35 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
-    public Cursor getShops() {
+//    public Cursor getShops() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        Cursor cursor = db.rawQuery("Select * from Shops", null);
+//
+//        return cursor;
+//    }
+
+    public ArrayList<Shop> getShops() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("Select * from Shops", null);
 
-        return cursor;
+        ArrayList<Shop> shops = new ArrayList<Shop>();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()){
+
+            long shopId = cursor.getInt(0);
+            String shopName = cursor.getString(1);
+            shopType type = shopType.fromId(cursor.getInt(2));
+            String logoUrl = cursor.getString(3);
+
+            shops.add(new Shop(shopId, shopName, type, logoUrl));
+        }
+
+        return shops;
     }
+
 
     public Shop getShop(long shopId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -240,6 +285,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
 
+        cursor.moveToFirst();
         while(cursor.moveToNext()){
 
             long shopId = cursor.getInt(0);
