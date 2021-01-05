@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static String lastCardsType = "1";
 
     DBHelper db;
+    Bundle bundle;
     User selectedUser;
     Spinner userSpinner;
     List<User> users = new ArrayList<User>();
@@ -87,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Get preferences
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String cardsType = SP.getString("cardsType","1");
+        final String[] cardsType = {SP.getString("cardsType", "1")};
         String username = SP.getString("username", "John");
         String email = SP.getString("email", "john.doe@gmail.com");
-        Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
 
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString("email", email);
 
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         menuNav = navigationView.getMenu();
         itemCardslist = menuNav.findItem(R.id.nav_cardslist);
         itemCardsview = menuNav.findItem(R.id.nav_cardsview);
-        if ( cardsType.equals("1") ) {
+        if ( cardsType[0].equals("1") ) {
             //Log.d(TAG, "Vrea carduri");
 
             if( itemCardslist != null && itemCardsview != null ) {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea carduri");
             }
-        } else if ( cardsType.equals("2") ){
+        } else if ( cardsType[0].equals("2") ){
             //Log.d(TAG, "Vrea lista");
             if( itemCardslist != null && itemCardsview != null ) {
                 itemCardslist.setVisible(true);
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             //Then register the sample users
             boolean registered = db.insertSampleUsers();
             if ( registered ) {
-                Log.d(TAG, "Users registered");
+                //Log.d(TAG, "Users registered");
                 users.clear();
                 users = db.getUsers();
             }
@@ -182,6 +183,21 @@ public class MainActivity extends AppCompatActivity {
                 selectedUser = userAdapter.userMap.get(userSpinner.getSelectedItemId());
                 SP.edit().putString("username", selectedUser.getFirstName()).apply();
                 SP.edit().putString("email", selectedUser.getEmail()).apply();
+
+                cardsType[0] = SP.getString("cardsType","1");
+
+                if(cardsType[0].equals("1")) {
+                    lastCardsType = "1";
+                    bundle.clear();
+                    bundle.putString("email", selectedUser.getEmail());
+                    navController.navigate(R.id.nav_cardsview, bundle);
+
+                } else if(cardsType[0].equals("2")) {
+                    lastCardsType = "2";
+                    bundle.clear();
+                    bundle.putString("email", selectedUser.getEmail());
+                    navController.navigate(R.id.nav_cardslist, bundle);
+                }
             }
 
             @Override
@@ -222,8 +238,11 @@ public class MainActivity extends AppCompatActivity {
                 itemCardslist.setVisible(false);
                 itemCardsview.setVisible(true);
                 //navController.getGraph().setStartDestination(R.id.nav_cardsview);
-                navController.navigate(R.id.nav_cardsview);
                 lastCardsType = "1";
+                bundle.clear();
+                bundle.putString("email", selectedUser.getEmail());
+                navController.navigate(R.id.nav_cardsview, bundle);
+
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea carduri");
@@ -234,8 +253,10 @@ public class MainActivity extends AppCompatActivity {
                 itemCardslist.setVisible(true);
                 itemCardsview.setVisible(false);
                 //navController.getGraph().setStartDestination(R.id.nav_cardslist);
-                navController.navigate(R.id.nav_cardslist);
                 lastCardsType = "2";
+                bundle.clear();
+                bundle.putString("email", selectedUser.getEmail());
+                navController.navigate(R.id.nav_cardslist, bundle);
 
             } else {
                 Log.d(TAG, "NOT FOUND dar vrea lista");

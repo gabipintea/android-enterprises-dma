@@ -32,7 +32,7 @@ public class CardsviewFragment extends Fragment {
     private int mColumnCount = 1;
     private String mEmail = "";
 
-    public static final List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
+    public static List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
     DBHelper db;
 
     /**
@@ -40,14 +40,6 @@ public class CardsviewFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CardsviewFragment() {
-        //TODO populate an array of DiscountCards from database based on the current User (from SharedPreferences)
-        discountCards.clear();
-        DiscountCard c1 = new DiscountCard(1, "gabi@gmail.com", 50, "2020-01-01");
-        DiscountCard c2 = new DiscountCard(1, "gabi@gmail.com", 80, "2021-01-01");
-        DiscountCard c3 = new DiscountCard(1, "gabi@gmail.com", 45, "2022-01-01");
-        discountCards.add(c1);
-        discountCards.add(c2);
-        discountCards.add(c3);
     }
 
 
@@ -67,8 +59,21 @@ public class CardsviewFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mEmail = getArguments().getString("email");
-            //Toast.makeText(this.getContext(), mEmail, Toast.LENGTH_LONG).show();
-            //db = new DBHelper(this.getContext());
+
+            db = new DBHelper(this.getContext());
+            discountCards.clear();
+            discountCards = db.getUserCards(mEmail);
+
+            if( discountCards.size() < 1 ) {
+                boolean inserted = db.insertSampleCards();
+                if(inserted) {
+                    discountCards.clear();
+                    discountCards = db.getUserCards(mEmail);
+                    Toast.makeText(this.getContext(), String.valueOf(discountCards.size()), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this.getContext(), "Not inserted", Toast.LENGTH_LONG).show();
+                }
+            }
 
         }
     }

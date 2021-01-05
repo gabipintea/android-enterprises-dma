@@ -308,13 +308,12 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
-
-        cursor.moveToFirst();
         long shopId = cursor.getInt(0);
         int discount = cursor.getInt(2);
         String expiryDate = cursor.getString(3);
 
         cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
+
         while(cursor.moveToNext()){
             shopId = cursor.getInt(0);
             discount = cursor.getInt(2);
@@ -324,6 +323,18 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return cards;
+    }
+
+    public Boolean insertSampleCards() {
+        boolean deleted = deleteCard(1, "john.doe@gmail.com");
+        deleted = deleteCard(1, "xi.cho@gmail.com");
+        deleted = deleteCard(1, "franck.stank@gmail.com");
+
+        boolean inserted = createCard(1, "john.doe@gmail.com", 50, "20/20/2021");
+        inserted = createCard(1, "xi.cho@gmail.com", 12, "20/20/2025");
+        inserted = createCard(1, "franck.stank@gmail.com", 50, "20/20/2023");
+
+        return inserted;
     }
 
 }

@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent;
@@ -29,21 +31,16 @@ public class CardslistFragment extends Fragment {
 
     private int mColumnCount = 1;
 
-    public static final List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
+    private String mEmail = "";
+
+    public static List<DiscountCard> discountCards = new ArrayList<DiscountCard>();
+    DBHelper db;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public CardslistFragment() {
-        //TODO populate an array of DiscountCards from database based on the current User (from SharedPreferences)
-        discountCards.clear();
-        DiscountCard c1 = new DiscountCard(1, "gabi@gmail.com", 50, "2020-01-01");
-        DiscountCard c2 = new DiscountCard(1, "gabi@gmail.com", 80, "2021-01-01");
-        DiscountCard c3 = new DiscountCard(1, "gabi@gmail.com", 45, "2022-01-01");
-        discountCards.add(c1);
-        discountCards.add(c2);
-        discountCards.add(c3);
     }
 
 
@@ -62,6 +59,23 @@ public class CardslistFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mEmail = getArguments().getString("email");
+
+            db = new DBHelper(this.getContext());
+            discountCards.clear();
+            discountCards = db.getUserCards(mEmail);
+
+            if( discountCards.size() < 1 ) {
+                boolean inserted = db.insertSampleCards();
+                if(inserted) {
+                    discountCards.clear();
+                    discountCards = db.getUserCards(mEmail);
+                    Toast.makeText(this.getContext(), String.valueOf(discountCards.size()), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this.getContext(), "Not inserted", Toast.LENGTH_LONG).show();
+                }
+            }
+
         }
     }
 
