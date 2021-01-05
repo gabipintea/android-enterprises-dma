@@ -9,15 +9,20 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android_enterprises.discountcards.AddActivity;
+import com.android_enterprises.discountcards.DBHelper;
+import com.android_enterprises.discountcards.MainActivity;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
+import com.android_enterprises.discountcards.model.shopType;
 import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent.DummyItem;
 
 import java.io.InputStream;
@@ -35,6 +40,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     //private final List<DummyItem> mValues;
     private final List<DiscountCard> mValues;
+    private static final String TAG = MyItemRecyclerViewAdapter.class.getSimpleName();
+    DBHelper db;
 
     public MyItemRecyclerViewAdapter(List<DiscountCard> items) {
         mValues = items;
@@ -49,7 +56,13 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Shop shop = mValues.get(position).getShop();
+        final long shopId = mValues.get(position).getShopId();
+
+        db = new DBHelper(holder.name.getContext());
+        boolean registered = db.registerShop("Lidl", shopType.fromId(1), "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+
+
+        final Shop shop = db.getShop(shopId);
 
         holder.mItem = mValues.get(position);
 //        holder.mIdView.setText(String.valueOf(mValues.get(position).getShopId()));

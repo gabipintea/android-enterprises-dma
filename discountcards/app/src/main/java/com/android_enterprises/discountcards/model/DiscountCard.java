@@ -54,15 +54,4 @@ public class DiscountCard {
                 ", expiryDate=" + expiryDate +
                 '}';
     }
-
-    public Shop getShop() {
-        //TODO Extract shop from database based on shopId
-
-        Shop shop = new Shop(this.getShopId(), "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
-
-
-
-
-        return shop;
-    }
 }

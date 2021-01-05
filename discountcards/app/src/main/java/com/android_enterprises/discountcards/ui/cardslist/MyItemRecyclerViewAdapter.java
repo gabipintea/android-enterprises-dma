@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
+import com.android_enterprises.discountcards.model.shopType;
 import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent.DummyItem;
 
 import java.io.InputStream;
@@ -35,6 +37,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     //private final List<DummyItem> mValues;
     private final List<DiscountCard> mValues;
+    DBHelper db;
 
     public MyItemRecyclerViewAdapter(List<DiscountCard> items) {
         mValues = items;
@@ -49,7 +52,13 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Shop shop = mValues.get(position).getShop();
+        final long shopId = mValues.get(position).getShopId();
+
+        db = new DBHelper(holder.name.getContext());
+        boolean registered = db.registerShop("Lidl", shopType.fromId(1), "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+
+
+        final Shop shop = db.getShop(shopId);
 
         holder.mItem = mValues.get(position);
 //        holder.mIdView.setText(String.valueOf(mValues.get(position).getShopId()));

@@ -14,7 +14,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e0206a5-4994-41df-8178-b635b19c59e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/DBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/model/DiscountCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/model/DiscountCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardslist/CardslistFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardslist/CardslistFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardslist/MyItemRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardslist/MyItemRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardsview/CardsviewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardsview/CardsviewFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardsview/MyItemRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/cardsview/MyItemRecyclerViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

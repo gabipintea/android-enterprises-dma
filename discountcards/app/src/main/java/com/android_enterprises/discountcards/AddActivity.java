@@ -66,7 +66,7 @@ public class AddActivity extends AppCompatActivity {
         });
 
         shopSpinner = (Spinner) findViewById(R.id.shopSpinner);
-        //TODO bring shops from DB and put them in a map for the spinner
+        //TODO bring shops from DB and put them in a map for the spinner (see DBHelper)
         Shop s1 = new Shop(100, "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
         Shop s2 = new Shop(200, "Lidl", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
         Shop s3 = new Shop(300, "Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
