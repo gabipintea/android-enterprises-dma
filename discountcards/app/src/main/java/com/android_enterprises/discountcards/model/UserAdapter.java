@@ -30,15 +30,16 @@ import static java.net.HttpURLConnection.HTTP_OK;
 public class UserAdapter extends BaseAdapter {
     private static final String TAG = UserAdapter.class.getSimpleName();
 
-    Map<Long, User> userMap;
-    LayoutInflater layoutInflater;
-    Context context;
+    public Map<Long, User> userMap;
+    public LayoutInflater layoutInflater;
+    public Context context;
 
     public UserAdapter(Map<Long, User> userMap, Context context) {
         this.userMap = userMap;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }
+
 
     @Override
     public int getCount() {
@@ -55,6 +56,11 @@ public class UserAdapter extends BaseAdapter {
     public long getItemId(int i) {
         Object[] objects = userMap.keySet().toArray();
         return userMap.get(objects[i]).getId();
+    }
+
+    public String getItemEmail(int i) {
+        Object[] objects = userMap.keySet().toArray();
+        return userMap.get(objects[i]).getEmail();
     }
 
     private static class UserViewHolder

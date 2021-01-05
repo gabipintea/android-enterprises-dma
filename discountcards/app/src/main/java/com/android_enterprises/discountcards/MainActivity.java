@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,21 +30,29 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Debugging TAG
     private static final String TAG = MainActivity.class.getSimpleName();
+
     private static Menu menuNav;
     private static MenuItem itemCardslist;
     private static MenuItem itemCardsview;
     private static NavController navController;
 
-
-    Spinner userSpinner;
     private AppBarConfiguration mAppBarConfiguration;
+
+    DBHelper db;
+    User selectedUser;
+    Spinner userSpinner;
+    List<User> users = new ArrayList<User>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +82,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+        //Get preferences
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        String strUserName = SP.getString("username", "NA");
-
-        boolean couponNotifications = SP.getBoolean("couponNotifications",false);
         String cardsType = SP.getString("cardsType","1");
-        Toast.makeText(this, "Welcome back, " + strUserName, Toast.LENGTH_LONG).show();
+        String username = SP.getString("username", "John");
+        String email = SP.getString("email", "john.doe@gmail.com");
+        Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
 
+        //Change menuItem according to preference (list or cards)
         menuNav = navigationView.getMenu();
         itemCardslist = menuNav.findItem(R.id.nav_cardslist);
         itemCardsview = menuNav.findItem(R.id.nav_cardsview);
@@ -108,41 +116,80 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //Populate userSpinner from DB
+        db = new DBHelper(this);
+        users = db.getUsers();
+
         View headerView = navigationView.getHeaderView(0);
         userSpinner = (Spinner) headerView.findViewById(R.id.userSpinner);
 
-        //TODO bring users from DB and put them in a map for the spinner (see DBHelper)
-//        Date birthdayDate = stringToDate("2020/01/01", "yyyy/MM/dd");
+        // Sample Static Data (uncomment and manually add them in the userMap)
+//        User u1 = new User(1,"John", "Doe", "01/01/2000", "john.doe@gmail.com");
+//        User u2 = new User(2,"Xi", "Cho", "01/01/2000", "xi.cho@gmail.com");
+//        User u3 = new User(3,"Franck", "Stank", "01/01/2000", "franck.stank@gmail.com");
 
-        //Log.d(TAG, String.valueOf(birthdayDate));
-        User u1 = new User(1,"John", "Doe", "01/01/2000", "john.doe@gmail.com");
-        User u2 = new User(2,"Xi", "Cho", "01/01/2000", "xi.cho@gmail.com");
-        User u3 = new User(3,"Franck", "Stank", "01/01/2000", "franck.stank@gmail.com");
+        // Sample DB Data (uncomment the following lines to add at least three users)
+        if( users.size() < 3 ) {
+            //First delete all the sample data if there are present
+            boolean deleted = db.deleteUser("john.doe@gmail.com");
+            deleted = db.deleteUser("xi.cho@gmail.com");
+            deleted = db.deleteUser("franck.stank@gmail.com");
+
+            //Then register the sample users
+            boolean registered = db.insertSampleUsers();
+            if ( registered ) {
+                Log.d(TAG, "Users registered");
+                users.clear();
+                users = db.getUsers();
+            }
+        }
 
         Map<Long, User> userMap = new HashMap<>();
-        userMap.put(u1.getId(), u1);
-        userMap.put(u2.getId(), u2);
-        userMap.put(u3.getId(), u3);
-        Log.d(TAG, String.valueOf(userMap.size()));
+        for ( User u : users) {
+            userMap.put(u.getId(), u);
+        }
 
+        UserAdapter userAdapter = new UserAdapter(userMap, this);
         if ( userSpinner != null ) {
-            UserAdapter userAdapter = new UserAdapter(userMap, this);
             userSpinner.setAdapter(userAdapter);
+
+            //Get the current user based on SharedPreferences email and select it in the spinner
+            selectedUser = db.getUser(email);
+            for( int position = 0; position < userAdapter.getCount(); position++ ) {
+                if(userAdapter.getItemEmail(position).equals(selectedUser.getEmail())) {
+                    userSpinner.setSelection(position);
+                }
+            }
         } else {
             Log.d(TAG, "No User Spinner found");
         }
 
+        //If user changed, change the SharedPreference
+        userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedUser = userAdapter.userMap.get(userSpinner.getSelectedItemId());
+                SP.edit().putString("username", selectedUser.getFirstName()).apply();
+                SP.edit().putString("email", selectedUser.getEmail()).apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //Nothing yet
+            }
+        });
     }
 
-    private Date stringToDate(String aDate,String aFormat) {
-
-        if(aDate==null) return null;
-        ParsePosition pos = new ParsePosition(0);
-        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
-        Date stringDate = simpledateformat.parse(aDate, pos);
-        return stringDate;
-
-    }
+    //Simple stringToDate function
+//    private Date stringToDate(String aDate,String aFormat) {
+//
+//        if(aDate==null) return null;
+//        ParsePosition pos = new ParsePosition(0);
+//        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
+//        Date stringDate = simpledateformat.parse(aDate, pos);
+//        return stringDate;
+//
+//    }
 
 
 

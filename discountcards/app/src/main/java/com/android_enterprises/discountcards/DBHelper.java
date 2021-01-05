@@ -97,18 +97,37 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<User> users = new ArrayList<User>();
 
         cursor.moveToFirst();
+        int id = cursor.getInt(0);
+        String fName = cursor.getString(1);
+        String lName = cursor.getString(2);
+        String email = cursor.getString(3);
+        String birthday = cursor.getString(4);
+
+        users.add(new User(id, fName, lName, birthday, email));
         while(cursor.moveToNext()){
 
-            int id = cursor.getInt(0);
-            String fName = cursor.getString(1);
-            String lName = cursor.getString(2);
-            String email = cursor.getString(3);
-            String birthday = cursor.getString(4);
+            id = cursor.getInt(0);
+            fName = cursor.getString(1);
+            lName = cursor.getString(2);
+            email = cursor.getString(3);
+            birthday = cursor.getString(4);
 
             users.add(new User(id, fName, lName, birthday, email));
         }
 
+
+
         return users;
+    }
+
+    public Boolean insertSampleUsers() {
+        boolean registered = false;
+
+        registered = registerUser("John", "Doe", "john.doe@gmail.com", "01/02/1996");
+        registered = registerUser("Xi", "Cho", "xi.cho@gmail.com", "01/02/1998");
+        registered = registerUser("Franck", "Stank", "franck.stank@gmail.com", "01/02/1999");
+
+        return registered;
     }
 
 
@@ -116,6 +135,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("Select * from Users where email=?", new String[]{mail});
+
+        cursor.moveToFirst();
 
         String fName = cursor.getString(0);
         String lName = cursor.getString(1);
@@ -279,7 +300,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //TODO IDEM for getShops and getUsers
+
     public ArrayList<DiscountCard> getUserCards(String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
 
