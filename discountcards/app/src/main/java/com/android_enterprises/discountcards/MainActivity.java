@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Insert sample data
         //Uncomment the following lines
-        //Comment line 146
+        //Comment line 147
         //Run the app
         //Stop the app
         //Comment the following lines
-        //Run the app
+        //Done! Run the app normally
         //#######################INSERT SCRIPT##############################
 //        db = new DBHelper(this);
 //        boolean insertedSample = db.insertSampleData();
