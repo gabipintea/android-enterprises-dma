@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.User;
+import com.android_enterprises.discountcards.ui.dialogs.CardDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,11 +32,12 @@ import java.net.URLConnection;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class ShowDetails extends AppCompatActivity {
+public class ShowDetails extends AppCompatActivity implements CardDialog.CardDialogListener {
 
     private static final String TAG = ShowDetails.class.getSimpleName();
 
     DBHelper db;
+    DiscountCard mDiscountCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class ShowDetails extends AppCompatActivity {
                 if(db.deleteCard(discountCard.getShopId(), discountCard.getUserEmail())) {
                     Intent back = new Intent(view.getContext(), MainActivity.class);
                     startActivity(back);
+                    finish();
                 } else {
                     Snackbar.make(view, "Deletion failed", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -72,7 +75,23 @@ public class ShowDetails extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton editfab = findViewById(R.id.editfab);
+        editfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO edit the current card
+//                Snackbar.make(view, "This will edit the card", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Bundle bundle = new Bundle();
+                bundle.putInt("discount", mDiscountCard.getDiscount());
+                bundle.putString("expirydate", mDiscountCard.getExpiryDate());
+                openDialog(bundle);
+            }
+        });
+
         if(discountCard != null ) {
+            mDiscountCard = discountCard;
+
             ImageView logo = findViewById(R.id.logoView);
             TextView shopName = findViewById(R.id.tvName);
             TextView expiryDate = findViewById(R.id.tvExpiryDate);
@@ -137,6 +156,23 @@ public class ShowDetails extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "No card here", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void openDialog(Bundle bundle) {
+        CardDialog cardDialog = new CardDialog();
+        cardDialog.setArguments(bundle);
+        cardDialog.show(getSupportFragmentManager(), "card dialog");
+    }
+
+    @Override
+    public void applyTexts(int discount, String expiryDate) {
+        if(db.editCard(mDiscountCard.getShopId(), mDiscountCard.getUserEmail(),discount, expiryDate)) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Card was not added", Toast.LENGTH_LONG).show();
         }
     }
 }

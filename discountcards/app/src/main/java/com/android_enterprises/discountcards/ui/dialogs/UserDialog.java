@@ -56,7 +56,7 @@ public class UserDialog extends AppCompatDialogFragment {
             listener = (UserDialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() +
-                    "must implement ExampleDialogListener");
+                    "must implement UserDialogListener");
         }
     }
     public interface UserDialogListener {

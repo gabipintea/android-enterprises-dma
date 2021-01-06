@@ -10,6 +10,8 @@ import com.android_enterprises.discountcards.model.ShopAdapter;
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.model.shopType;
 import com.android_enterprises.discountcards.ui.controls.MySeekBar;
+import com.android_enterprises.discountcards.ui.dialogs.CardDialog;
+import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -91,6 +93,7 @@ public class AddActivity extends AppCompatActivity {
                 if(result) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
+                    finish();
                 }
             }
         });

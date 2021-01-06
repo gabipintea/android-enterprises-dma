@@ -229,9 +229,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "resumed");
-
-
+        //Log.d(TAG, "resumed");
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String cardsType = SP.getString("cardsType","1");
