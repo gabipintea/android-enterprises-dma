@@ -38,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // To be used in the MainActivity in order to start with a refreshed minimal populated DB
     public Boolean insertSampleData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("drop Table if exists Users");
@@ -66,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
+    //TODO call this method somewhere
     public Boolean editUser(String fName, String lName, String mail, String bDay) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -98,13 +100,6 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
-//    public Cursor getUsers() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.rawQuery("Select * from Users", null);
-//
-//        return cursor;
-//    }
 
     public ArrayList<User> getUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -182,6 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
+    //TODO call this method somewhere
     public Boolean editShop(long id, String shName, shopType type, String logo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -200,18 +196,19 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
-    public Boolean deleteShop(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("Select * from Shops where shopId = ?", new String[]{String.valueOf(id)});
-
-        if (cursor.getCount() > 0) {
-            long result = db.delete("Shops", "shopId=?", new String[]{String.valueOf(id)});
-            if (result == -1)
-                return false;
-            else return true;
-        } else return false;
-    }
+//
+//    public Boolean deleteShop(long id) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        Cursor cursor = db.rawQuery("Select * from Shops where shopId = ?", new String[]{String.valueOf(id)});
+//
+//        if (cursor.getCount() > 0) {
+//            long result = db.delete("Shops", "shopId=?", new String[]{String.valueOf(id)});
+//            if (result == -1)
+//                return false;
+//            else return true;
+//        } else return false;
+//    }
 
     public Boolean deleteShopByName(String shopName) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -237,13 +234,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return inserted;
     }
 
-//    public Cursor getShops() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.rawQuery("Select * from Shops", null);
-//
-//        return cursor;
-//    }
 
     public ArrayList<Shop> getShops() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -273,32 +263,33 @@ public class DBHelper extends SQLiteOpenHelper {
         return shops;
     }
 
-    public boolean deleteAllShopsButLetOne() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        long shopId=1;
-        boolean inserted = false;
-        boolean deleted = deleteCard(1, "john.doe@gmail.com");
-        deleted = deleteCard(1, "xi.cho@gmail.com");
-        deleted = deleteCard(1, "franck.stank@gmail.com");
-
-        db.execSQL("DELETE FROM Shops");
-
-        boolean registered = registerShop("Lidl", shopType.general, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-        if(registered) {
-            ArrayList<Shop> shops = new ArrayList<Shop>();
-            shops = getShops();
-
-            for(Shop shop : shops) {
-                shopId =  shop.getShopId();
-                Log.d(TAG, "The new shop ID: " + String.valueOf(shopId));
-                break;
-            }
-            inserted = createCard(shopId, "john.doe@gmail.com", 50, "20/20/2021");
-            inserted = createCard(shopId, "xi.cho@gmail.com", 12, "20/20/2025");
-            inserted = createCard(shopId, "franck.stank@gmail.com", 50, "20/20/2023");
-        }
-        return inserted;
-    }
+// Was needed for a special situation in development, in order to not mess up the database
+//    public boolean deleteAllShopsButLetOne() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        long shopId=1;
+//        boolean inserted = false;
+//        boolean deleted = deleteCard(1, "john.doe@gmail.com");
+//        deleted = deleteCard(1, "xi.cho@gmail.com");
+//        deleted = deleteCard(1, "franck.stank@gmail.com");
+//
+//        db.execSQL("DELETE FROM Shops");
+//
+//        boolean registered = registerShop("Lidl", shopType.general, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+//        if(registered) {
+//            ArrayList<Shop> shops = new ArrayList<Shop>();
+//            shops = getShops();
+//
+//            for(Shop shop : shops) {
+//                shopId =  shop.getShopId();
+//                Log.d(TAG, "The new shop ID: " + String.valueOf(shopId));
+//                break;
+//            }
+//            inserted = createCard(shopId, "john.doe@gmail.com", 50, "20/20/2021");
+//            inserted = createCard(shopId, "xi.cho@gmail.com", 12, "20/20/2025");
+//            inserted = createCard(shopId, "franck.stank@gmail.com", 50, "20/20/2023");
+//        }
+//        return inserted;
+//    }
 
 
     public Shop getShop(long shopId) {
@@ -375,14 +366,8 @@ public class DBHelper extends SQLiteOpenHelper {
         } else return false;
     }
 
-    public Cursor getCards() {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * from Cards", null);
-
-        return cursor;
-    }
-
+    //TODO call this method somewhere
     public DiscountCard getCard(long shopId, String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
         DiscountCard card = new DiscountCard();
@@ -397,7 +382,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return card;
     }
-
 
 
     public ArrayList<DiscountCard> getUserCards(String userEmail) {

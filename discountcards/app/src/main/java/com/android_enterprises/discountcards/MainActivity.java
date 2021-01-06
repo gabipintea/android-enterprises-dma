@@ -58,10 +58,11 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
     protected void onCreate(Bundle savedInstanceState) {
         //Insert sample data
         //Uncomment the following lines
-        //Comment line 147
+        //Comment the initialization of db in USER HEADER (aprox. line 143)
         //Run the app
         //Stop the app
         //Comment the following lines
+        //Uncomment the initialization of db in USER HEADER (aprox. line 143)
         //Done! Run the app as you wish
         //#######################INSERT SCRIPT##############################
 //        db = new DBHelper(this);
