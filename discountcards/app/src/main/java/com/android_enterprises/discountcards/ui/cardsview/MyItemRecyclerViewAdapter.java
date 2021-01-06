@@ -65,6 +65,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 //        holder.mIdView.setText(String.valueOf(mValues.get(position).getShopId()));
 //        holder.mContentView.setText(String.valueOf(mValues.get(position).getDiscount()));
         holder.name.setText(shop.getShopName());
+
+        //TODO uncomment the following ones
         //holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()));
         //holder.expiry.setText(String.valueOf(mValues.get(position).getExpiryDate()));
 
@@ -128,6 +130,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         public final ImageView logo;
         public final TextView name;
+        //TODO uncomment these
+//        public final TextView discount;
+//        public final TextView expiry;
 
         public ViewHolder(View view) {
             super(view);
@@ -145,8 +150,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 }
             });
             name = (TextView) view.findViewById(R.id.tvName);
-            //discount = (TextView) view.findViewById(R.id.tvDiscount);
-            //expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
+            //TODO uncomment these
+//            discount = (TextView) view.findViewById(R.id.tvDiscount);
+//            expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
         }
 
 //        @Override
