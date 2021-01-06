@@ -41,12 +41,13 @@
             android:textAlignment="center"
             android:textSize="25sp" />
 
-        <SeekBar
+        <com.android_enterprises.discountcards.ui.controls.MySeekBar
             android:id="@+id/discountValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:max="100" />
+            android:max="100"/>
+
 
         <TextView
             android:id="@+id/txtExpiryDate"

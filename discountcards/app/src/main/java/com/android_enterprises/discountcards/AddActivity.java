@@ -9,6 +9,7 @@ import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.ShopAdapter;
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.model.shopType;
+import com.android_enterprises.discountcards.ui.controls.MySeekBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,7 +34,7 @@ public class AddActivity extends AppCompatActivity {
     private static final String TAG = AddActivity.class.getSimpleName();
 
     Spinner shopSpinner;
-    SeekBar discountValue;
+    MySeekBar discountValue;
     EditText expiryDateField;
 
     DBHelper db;
@@ -45,7 +46,23 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         Toolbar toolbar = findViewById(R.id.toolbar);
         shopSpinner = (Spinner)findViewById(R.id.shopSpinner);
-        discountValue = (SeekBar)findViewById(R.id.discountValue);
+        discountValue = (MySeekBar)findViewById(R.id.discountValue);
+        discountValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         expiryDateField   = (EditText)findViewById(R.id.expiryDate);
         setSupportActionBar(toolbar);
 
