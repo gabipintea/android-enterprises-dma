@@ -56,19 +56,20 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Insert sample data
-        //Uncomment the following lines
-        //Comment the initialization of db in USER HEADER (aprox. line 143)
-        //Run the app
-        //Stop the app
-        //Comment the following lines
-        //Uncomment the initialization of db in USER HEADER (aprox. line 143)
-        //Done! Run the app as you wish
-        //#######################INSERT SCRIPT##############################
-//        db = new DBHelper(this);
-//        boolean insertedSample = db.insertSampleData();
-//        Log.d(TAG, String.valueOf(insertedSample));
-        //##################################################################
+        //Insert sample data for a fresh DB
+        //Toggle the sample boolean to true
+        //Run the app and stop it afterwards
+        //Toggle the sample boolean to false
+        //Run the app as you wish
+        boolean sample = false;
+
+        if(sample) {
+            //#######################INSERT SCRIPT##############################
+            db = new DBHelper(this);
+            boolean insertedSample = db.insertSampleData();
+            Log.d(TAG, String.valueOf(insertedSample));
+            //##################################################################
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
@@ -141,7 +142,10 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
 
         //##########USERS HEADER##########
         //Populate userSpinner from DB
-        db = new DBHelper(this);
+        if(!sample) {
+            db = new DBHelper(this);
+        }
+
         users = db.getUsers();
 
         View headerView = navigationView.getHeaderView(0);
