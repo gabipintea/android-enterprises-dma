@@ -79,9 +79,6 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
         editfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO edit the current card
-//                Snackbar.make(view, "This will edit the card", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Bundle bundle = new Bundle();
                 bundle.putInt("discount", mDiscountCard.getDiscount());
                 bundle.putString("expirydate", mDiscountCard.getExpiryDate());
