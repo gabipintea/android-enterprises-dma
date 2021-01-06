@@ -13,15 +13,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android_enterprises.discountcards.model.DiscountCard;
-import com.android_enterprises.discountcards.model.Shop;
-import com.android_enterprises.discountcards.model.ShopAdapter;
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.model.UserAdapter;
-import com.android_enterprises.discountcards.model.shopType;
+import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,15 +27,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserDialog.UserDialogListener {
 
     // Debugging TAG
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -207,11 +200,17 @@ public class MainActivity extends AppCompatActivity {
         addUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Let's add a new user", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "Let's add a new user", Toast.LENGTH_SHORT).show();
+                openDialog();
             }
         });
         //#########END USERS HEADER###########
     }
+    public void openDialog() {
+        UserDialog userDialog = new UserDialog();
+        userDialog.show(getSupportFragmentManager(), "user dialog");
+    }
+
 
     //Simple stringToDate function
 //    private Date stringToDate(String aDate,String aFormat) {
@@ -287,5 +286,10 @@ public class MainActivity extends AppCompatActivity {
     public void showSettings(MenuItem item) {
         Intent i = new Intent(getApplicationContext(), MyPreferenceActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public void applyTexts(String firstname, String lastname, String email, String birthdate) {
+        Toast.makeText(getApplicationContext(), firstname+" "+lastname, Toast.LENGTH_LONG).show();
     }
 }

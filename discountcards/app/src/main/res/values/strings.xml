@@ -36,4 +36,8 @@
     <string name="find_a_shop_nearby">Find a shop nearby</string>
     <string name="default_discount">0%</string>
     <string name="new_user">New User</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="birthdate">Birthdate</string>
 </resources>
