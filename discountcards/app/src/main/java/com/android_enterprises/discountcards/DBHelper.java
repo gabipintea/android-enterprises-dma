@@ -113,27 +113,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ArrayList<User> users = new ArrayList<User>();
 
-        cursor.moveToFirst();
-        int id = cursor.getInt(0);
-        String fName = cursor.getString(1);
-        String lName = cursor.getString(2);
-        String email = cursor.getString(3);
-        String birthday = cursor.getString(4);
-
-        users.add(new User(id, fName, lName, birthday, email));
-        while(cursor.moveToNext()){
-
-            id = cursor.getInt(0);
-            fName = cursor.getString(1);
-            lName = cursor.getString(2);
-            email = cursor.getString(3);
-            birthday = cursor.getString(4);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            int id = cursor.getInt(0);
+            String fName = cursor.getString(1);
+            String lName = cursor.getString(2);
+            String email = cursor.getString(3);
+            String birthday = cursor.getString(4);
 
             users.add(new User(id, fName, lName, birthday, email));
+            while(cursor.moveToNext()){
+
+                id = cursor.getInt(0);
+                fName = cursor.getString(1);
+                lName = cursor.getString(2);
+                email = cursor.getString(3);
+                birthday = cursor.getString(4);
+
+                users.add(new User(id, fName, lName, birthday, email));
+            }
         }
-
-
-
         return users;
     }
 
@@ -153,16 +152,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public User getUser(String mail) {
         SQLiteDatabase db = this.getWritableDatabase();
+        User user = new User();
 
         Cursor cursor = db.rawQuery("Select * from Users where email=?", new String[]{mail});
 
-        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
 
-        String fName = cursor.getString(0);
-        String lName = cursor.getString(1);
-        String birthday = cursor.getString(3);
+            String fName = cursor.getString(0);
+            String lName = cursor.getString(1);
+            String birthday = cursor.getString(3);
 
-        User user = new User(0, fName, lName, birthday, mail);
+            user = new User(0, fName, lName, birthday, mail);
+        }
+
 
         return user;
     }
@@ -249,23 +252,24 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ArrayList<Shop> shops = new ArrayList<Shop>();
 
-        cursor.moveToFirst();
-        long shopId = cursor.getInt(0);
-        String shopName = cursor.getString(1);
-        shopType type = shopType.fromId(cursor.getInt(2));
-        String logoUrl = cursor.getString(3);
-
-        shops.add(new Shop(shopId, shopName, type, logoUrl));
-        while(cursor.moveToNext()){
-
-            shopId = cursor.getInt(0);
-            shopName = cursor.getString(1);
-            type = shopType.fromId(cursor.getInt(2));
-            logoUrl = cursor.getString(3);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            long shopId = cursor.getInt(0);
+            String shopName = cursor.getString(1);
+            shopType type = shopType.fromId(cursor.getInt(2));
+            String logoUrl = cursor.getString(3);
 
             shops.add(new Shop(shopId, shopName, type, logoUrl));
-        }
+            while(cursor.moveToNext()){
 
+                shopId = cursor.getInt(0);
+                shopName = cursor.getString(1);
+                type = shopType.fromId(cursor.getInt(2));
+                logoUrl = cursor.getString(3);
+
+                shops.add(new Shop(shopId, shopName, type, logoUrl));
+            }
+        }
         return shops;
     }
 
@@ -299,15 +303,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Shop getShop(long shopId) {
         SQLiteDatabase db = this.getWritableDatabase();
+        Shop shop = new Shop();
 
         Cursor cursor = db.rawQuery("Select * from Shops where shopId=?", new String[]{String.valueOf(shopId)});
 
-        cursor.moveToFirst();
-        String shopName = cursor.getString(1);
-        shopType type = shopType.fromId(cursor.getInt(2));
-        String logoURL = cursor.getString(3);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String shopName = cursor.getString(1);
+            shopType type = shopType.fromId(cursor.getInt(2));
+            String logoURL = cursor.getString(3);
 
-        Shop shop = new Shop(shopId, shopName, type, logoURL);
+            shop = new Shop(shopId, shopName, type, logoURL);
+        }
 
         return shop;
     }
@@ -378,14 +385,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DiscountCard getCard(long shopId, String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
+        DiscountCard card = new DiscountCard();
 
         Cursor cursor = db.rawQuery("Select * from Cards where shopId=? AND userEmail=?", new String[]{String.valueOf(shopId), userEmail});
 
-        int discount = cursor.getInt(2);
-        String expiryDate = cursor.getString(3);
+        if( cursor.getCount() > 0 ) {
+            int discount = cursor.getInt(2);
+            String expiryDate = cursor.getString(3);
 
-        DiscountCard card = new DiscountCard(shopId, userEmail, discount, expiryDate);
-
+            card = new DiscountCard(shopId, userEmail, discount, expiryDate);
+        }
         return card;
     }
 
@@ -393,24 +402,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<DiscountCard> getUserCards(String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
 
         Cursor cursor = db.rawQuery("Select * from Cards where userEmail=?", new String[]{userEmail});
-        cursor.moveToFirst();
+        if( cursor.getCount() > 0 ) {
+            cursor.moveToFirst();
 
-        ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
-        long shopId = cursor.getInt(0);
-        int discount = cursor.getInt(2);
-        String expiryDate = cursor.getString(3);
 
-        cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
-
-        while(cursor.moveToNext()){
-            shopId = cursor.getInt(0);
-            discount = cursor.getInt(2);
-            expiryDate = cursor.getString(3);
+            long shopId = cursor.getInt(0);
+            int discount = cursor.getInt(2);
+            String expiryDate = cursor.getString(3);
 
             cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
+
+            while(cursor.moveToNext()){
+                shopId = cursor.getInt(0);
+                discount = cursor.getInt(2);
+                expiryDate = cursor.getString(3);
+
+                cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
+            }
         }
+
 
         return cards;
     }

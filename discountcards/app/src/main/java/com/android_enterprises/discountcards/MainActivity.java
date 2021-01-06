@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //##########USERS HEADER##########
         //Populate userSpinner from DB
         db = new DBHelper(this);
         users = db.getUsers();
@@ -200,6 +202,15 @@ public class MainActivity extends AppCompatActivity {
                 //Nothing yet
             }
         });
+
+        Button addUser = (Button) headerView.findViewById(R.id.btnAddUser);
+        addUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Let's add a new user", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //#########END USERS HEADER###########
     }
 
     //Simple stringToDate function

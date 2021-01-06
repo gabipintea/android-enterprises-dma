@@ -13,6 +13,9 @@ public class DiscountCard implements Parcelable {
     int discount = 1;
     String expiryDate = "";
 
+    public DiscountCard() {
+    }
+
     public DiscountCard(long shopId, String email, int discount, String expiryDate) {
         this.shopId = shopId;
         this.userEmail = email;

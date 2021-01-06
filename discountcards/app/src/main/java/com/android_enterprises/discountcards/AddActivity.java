@@ -105,14 +105,6 @@ public class AddActivity extends AppCompatActivity {
             shopMap.put(shop.getShopId(), shop);
         }
 
-//        Shop s1 = new Shop(100, "Kaufland", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
-//        Shop s2 = new Shop(200, "Lidl", shopType.food, "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-//        Shop s3 = new Shop(300, "Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
-//        Map<Long, Shop> shopMap = new HashMap<>();
-//        shopMap.put(s1.getShopId(), s1);
-//        shopMap.put(s2.getShopId(), s2);
-//        shopMap.put(s3.getShopId(), s3);
-
         ShopAdapter shopAdapter = new ShopAdapter(shopMap, this);
         shopSpinner.setAdapter(shopAdapter);
     }

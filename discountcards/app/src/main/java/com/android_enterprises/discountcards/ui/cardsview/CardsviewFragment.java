@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import java.util.ArrayList;
@@ -63,6 +64,11 @@ public class CardsviewFragment extends Fragment {
             db = new DBHelper(this.getContext());
             discountCards.clear();
             discountCards = db.getUserCards(mEmail);
+
+            if( discountCards.size() < 1 && getActivity().findViewById(R.id.nav_cardsview) != null) {
+                Snackbar.make(getActivity().findViewById(R.id.nav_cardsview), "You have no cards yet. Let's add one!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
     }
 

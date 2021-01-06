@@ -15,7 +15,7 @@
         <activity
             android:name=".ShowDetails"
             android:label="@string/title_activity_show_details"
-            android:theme="@style/Theme.DiscountCards.NoActionBar"></activity>
+            android:theme="@style/Theme.DiscountCards.NoActionBar"/>
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add"
