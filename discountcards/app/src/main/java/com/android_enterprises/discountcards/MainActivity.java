@@ -18,6 +18,7 @@ import com.android_enterprises.discountcards.model.UserAdapter;
 import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -290,6 +291,14 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
 
     @Override
     public void applyTexts(String firstname, String lastname, String email, String birthdate) {
-        Toast.makeText(getApplicationContext(), firstname+" "+lastname, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), firstname+" "+lastname, Toast.LENGTH_LONG).show();
+        if(db.registerUser(firstname,lastname,email,birthdate)) {
+            SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SP.edit().putString("username", firstname).apply();
+            SP.edit().putString("email", email).apply();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        } else {
+            Toast.makeText(getApplicationContext(), firstname+" "+lastname+" was not added", Toast.LENGTH_LONG).show();
+        }
     }
 }
