@@ -35,4 +35,5 @@
     <string name="card_details">Card Details</string>
     <string name="find_a_shop_nearby">Find a shop nearby</string>
     <string name="default_discount">0%</string>
+    <string name="new_user">New User</string>
 </resources>
