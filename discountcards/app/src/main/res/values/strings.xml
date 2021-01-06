@@ -31,4 +31,6 @@
     <string name="local_import">Local Import</string>
     <string name="online_backup">Online Backup</string>
     <string name="restore_backup">Restore Backup</string>
+    <string name="title_activity_show_details">ShowDetails</string>
+    <string name="card_details">Card Details</string>
 </resources>

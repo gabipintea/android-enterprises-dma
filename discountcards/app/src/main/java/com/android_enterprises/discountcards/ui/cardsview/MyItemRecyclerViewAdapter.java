@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,15 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android_enterprises.discountcards.AddActivity;
 import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.MainActivity;
 import com.android_enterprises.discountcards.R;
+import com.android_enterprises.discountcards.ShowDetails;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.shopType;
-import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent.DummyItem;
+
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -33,9 +36,7 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- */
+
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<DiscountCard> mValues;
@@ -135,6 +136,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 //            mContentView = (TextView) view.findViewById(R.id.content);
 
             logo = (ImageView) view.findViewById(R.id.logoView);
+            logo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(mView.getContext(), ShowDetails.class);
+                    i.putExtra("selectedCard", mItem);
+                    mView.getContext().startActivity(i);
+                }
+            });
             name = (TextView) view.findViewById(R.id.tvName);
             //discount = (TextView) view.findViewById(R.id.tvDiscount);
             //expiry = (TextView) view.findViewById(R.id.tvExpiryDate);

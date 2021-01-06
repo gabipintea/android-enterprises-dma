@@ -45,7 +45,6 @@ public class BackupFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(BackupViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

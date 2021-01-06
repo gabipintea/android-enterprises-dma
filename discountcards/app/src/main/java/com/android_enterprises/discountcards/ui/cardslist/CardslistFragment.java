@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.android_enterprises.discountcards.DBHelper;
 import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.DiscountCard;
-import com.android_enterprises.discountcards.ui.cardslist.dummy.DummyContent;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,18 +64,6 @@ public class CardslistFragment extends Fragment {
             db = new DBHelper(this.getContext());
             discountCards.clear();
             discountCards = db.getUserCards(mEmail);
-
-//            if( discountCards.size() < 1 ) {
-//                boolean inserted = db.insertSampleCards();
-//                if(inserted) {
-//                    discountCards.clear();
-//                    discountCards = db.getUserCards(mEmail);
-//                    Toast.makeText(this.getContext(), String.valueOf(discountCards.size()), Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(this.getContext(), "Not inserted", Toast.LENGTH_LONG).show();
-//                }
-//            }
-
         }
     }
 

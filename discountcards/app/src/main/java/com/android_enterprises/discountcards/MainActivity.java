@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         final String[] cardsType = {SP.getString("cardsType", "1")};
         String username = SP.getString("username", "John");
         String email = SP.getString("email", "john.doe@gmail.com");
-        Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
 
         bundle = new Bundle();
         bundle.putString("email", email);
@@ -150,21 +150,6 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         userSpinner = (Spinner) headerView.findViewById(R.id.userSpinner);
 
-        // Sample Static Data (uncomment and manually add them in the userMap)
-//        User u1 = new User(1,"John", "Doe", "01/01/2000", "john.doe@gmail.com");
-//        User u2 = new User(2,"Xi", "Cho", "01/01/2000", "xi.cho@gmail.com");
-//        User u3 = new User(3,"Franck", "Stank", "01/01/2000", "franck.stank@gmail.com");
-
-        // Sample DB Data (uncomment the following lines to add at least three users)
-//        if( users.size() < 3 ) {
-//            //Then register the sample users
-//            boolean registered = db.insertSampleUsers();
-//            if ( registered ) {
-//                //Log.d(TAG, "Users registered");
-//                users.clear();
-//                users = db.getUsers();
-//            }
-//        }
 
         Map<Long, User> userMap = new HashMap<>();
         for ( User u : users) {

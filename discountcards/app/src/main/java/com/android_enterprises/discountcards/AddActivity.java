@@ -63,11 +63,6 @@ public class AddActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO insert the card in the database for the current user (from SharedPreferences?)
-//                Snackbar.make(view, "This will add the card to the database", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-
 
                 ShopAdapter adapter = (ShopAdapter) shopSpinner.getAdapter();
                 Shop selectedShop = adapter.shopList.get(shopSpinner.getSelectedItemId());
