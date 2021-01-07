@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         //Get preferences
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String[] cardsType = {SP.getString("cardsType", "1")};
-        String firstname = SP.getString("firstname", "John");
+        //String firstname = SP.getString("firstname", "John");
         String email = SP.getString("email", "john.doe@gmail.com");
         //Toast.makeText(this, "Welcome back, " + firstname, Toast.LENGTH_LONG).show();
 
@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
                     userSpinner.setSelection(position);
                 }
             }
+            Toast.makeText(this, "Welcome back, " + selectedUser.getFirstName(), Toast.LENGTH_SHORT).show();
         } else {
             Log.d(TAG, "No User Spinner found");
         }

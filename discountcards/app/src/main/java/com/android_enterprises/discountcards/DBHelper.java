@@ -84,10 +84,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if(!mail.equals(oldMail)) {
             contentValues.put("userEmail", mail);
-            Cursor cursor = db.rawQuery("Select * from Cards where userEmail=?", new String[]{oldMail});
-            if (cursor.getCount() > 0) {
+            Cursor cardsCursor = db.rawQuery("Select * from Cards where userEmail=?", new String[]{oldMail});
+            if (cardsCursor.getCount() > 0) {
                 long result = db.update("Cards", contentValues, "userEmail = ?", new String[]{oldMail});
             }
+            cardsCursor.close();
             contentValues.clear();
             contentValues.put("email", mail);
         }
