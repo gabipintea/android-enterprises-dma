@@ -1,30 +1,30 @@
 package com.android_enterprises.discountcards.ui.backup;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.android_enterprises.discountcards.DBHelper;
+import com.android_enterprises.discountcards.MainActivity;
 import com.android_enterprises.discountcards.R;
+import com.android_enterprises.discountcards.ShowDetails;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +38,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class BackupFragment extends Fragment {
+
+    private static final String TAG = BackupFragment.class.getSimpleName();
 
     private BackupViewModel mViewModel;
 
@@ -194,7 +196,9 @@ public class BackupFragment extends Fragment {
                     while ((nextLine = inShops.readNext()) != null) {
                         shopName = nextLine[1];
                         shopType = Integer.parseInt(nextLine[2]);
-                        logoURL = String.valueOf(java.net.URLEncoder.encode(nextLine[3], "UTF-8"));
+                        //logoURL = String.valueOf(java.net.URLEncoder.encode(nextLine[3], "UTF-8"));
+                        logoURL = nextLine[3];
+                        //Log.d(TAG, logoURL);
 
                         db.registerShop(shopName, shopType, logoURL);
                     }
@@ -218,6 +222,9 @@ public class BackupFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
 
             }
         });

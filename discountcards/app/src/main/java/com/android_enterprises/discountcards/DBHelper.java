@@ -40,9 +40,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void clearDatabase() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM Users");
-        db.execSQL("DELETE FROM Cards");
-        db.execSQL("DELETE FROM Shops");
+        db.execSQL("drop Table if exists Users");
+        db.execSQL("drop Table if exists Shops");
+        db.execSQL("drop Table if exists Cards");
+        db.execSQL("create Table Users(firstName TEXT, lastName TEXT, email TEXT PRIMARY KEY, birthday DATE)");
+        db.execSQL("create Table Shops(shopId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, shopName TEXT, shopType INTEGER, logoURL TEXT)");
+        db.execSQL("create Table Cards(shopId INTEGER REFERENCES Shops (shopId), userEmail TEXT REFERENCES Users (email), discount INTEGER, expiryDate DATE)");
+
     }
 
     // To be used in the MainActivity in order to start with a refreshed minimal populated DB
