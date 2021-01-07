@@ -40,4 +40,12 @@
     <string name="first_name">First Name</string>
     <string name="e_mail_address">E-mail address</string>
     <string name="birthdate">Birthdate</string>
+    <string name="shop_admin">Shop Admin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="shop_type">Shop Type</string>
+    <string name="logo_url_if_known">Logo URL (if known)</string>
+    <string name="edit_selected_shop">Edit selected shop</string>
+    <string name="add_new_shop">Add new shop</string>
 </resources>

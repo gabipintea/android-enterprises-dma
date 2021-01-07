@@ -41,7 +41,6 @@ public class BackupFragment extends Fragment {
 
     private static final String TAG = BackupFragment.class.getSimpleName();
 
-    private BackupViewModel mViewModel;
 
     public Button exportLocalCSV, importLocalCSV, exportLocalJSON, importLocalJSON;
 
@@ -54,8 +53,7 @@ public class BackupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//        mViewModel =
-//                new ViewModelProvider(this).get(BackupViewModel.class);
+
         View root = inflater.inflate(R.layout.backup_fragment, container, false);
         exportLocalCSV = root.findViewById(R.id.local_export_csv);
         importLocalCSV = root.findViewById(R.id.local_import_csv);
@@ -394,7 +392,6 @@ public class BackupFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(BackupViewModel.class);
     }
 
 

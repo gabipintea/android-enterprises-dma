@@ -23,5 +23,11 @@
             android:title="@string/menu_backup"
             android:visible="true"/>
 
+        <item
+            android:id="@+id/nav_shop_admin"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/shop_admin"
+            android:visible="false"/>
+
     </group>
 </menu>

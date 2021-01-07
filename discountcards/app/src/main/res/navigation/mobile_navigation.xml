@@ -29,4 +29,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_shop_admin"
+        android:name="com.android_enterprises.discountcards.ui.shopadmin.ShopAdminFragment"
+        android:label="@string/shop_admin"
+        tools:layout="@layout/fragment_shop_admin">
+
+    </fragment>
+
 </navigation>

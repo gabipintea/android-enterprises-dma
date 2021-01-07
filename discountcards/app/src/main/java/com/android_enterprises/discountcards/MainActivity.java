@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
     private static Menu menuNav;
     private static MenuItem itemCardslist;
     private static MenuItem itemCardsview;
+    private static MenuItem shopAdmin;
     private static NavController navController;
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -109,10 +110,18 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         bundle.putString("email", email);
 
 
-        //Change menuItem according to preference (list or cards)
+        //Change menuItem according to preferences
         menuNav = navigationView.getMenu();
         itemCardslist = menuNav.findItem(R.id.nav_cardslist);
         itemCardsview = menuNav.findItem(R.id.nav_cardsview);
+        shopAdmin = menuNav.findItem(R.id.nav_shop_admin);
+
+        if(email.equals("admin@admin.com")) {
+            shopAdmin.setVisible(true);
+        } else {
+            shopAdmin.setVisible(false);
+        }
+
         if ( cardsType[0].equals("1") ) {
             //Log.d(TAG, "Vrea carduri");
 
@@ -195,6 +204,12 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
                     bundle.clear();
                     bundle.putString("email", selectedUser.getEmail());
                     navController.navigate(R.id.nav_cardslist, bundle);
+                }
+
+                if(selectedUser.getEmail().equals("admin@admin.com")) {
+                    shopAdmin.setVisible(true);
+                } else {
+                    shopAdmin.setVisible(false);
                 }
             }
 
