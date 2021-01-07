@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
             db = new DBHelper(this);
             boolean insertedSample = db.insertSampleData();
             Log.d(TAG, String.valueOf(insertedSample));
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            prefs.edit().putString("firstname", "John").apply();
+            prefs.edit().putString("lastname", "Doe").apply();
+            prefs.edit().putString("email", "john.doe@gmail.com").apply();
+            prefs.edit().putString("birthday", "01/02/1996").apply();
             //##################################################################
         }
 

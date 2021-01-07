@@ -198,12 +198,12 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    //TODO call this method somewhere
+
     public Boolean editShop(long id, String shName, shopType type, String logo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("shopName", shName);
-        contentValues.put("shopType", String.valueOf(type));
+        contentValues.put("shopType", type.getId());
         contentValues.put("logoURL", logo);
 
         Cursor cursor = db.rawQuery("Select * from Shops where shopId = ?", new String[]{String.valueOf(id)});

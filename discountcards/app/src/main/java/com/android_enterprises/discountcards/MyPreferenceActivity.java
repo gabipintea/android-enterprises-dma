@@ -51,7 +51,7 @@ public class MyPreferenceActivity extends PreferenceActivity {
             prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
             listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                    Log.d(TAG, "ONCHANGE");
+                    //Log.d(TAG, "ONCHANGE");
                     String fName = prefs.getString("firstname", "NA");
                     String lName = prefs.getString("lastname", "NA");
                     String mail = prefs.getString("email", "NA");
@@ -73,6 +73,7 @@ public class MyPreferenceActivity extends PreferenceActivity {
                             }
                         }, 2000);
                     } else {
+                        db.close();
                         Toast.makeText(getActivity(), "Oops! Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                     prefs.unregisterOnSharedPreferenceChangeListener(this);
