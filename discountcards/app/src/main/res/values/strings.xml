@@ -48,4 +48,8 @@
     <string name="logo_url_if_known">Logo URL (if known)</string>
     <string name="edit_selected_shop">Edit selected shop</string>
     <string name="add_new_shop">Add new shop</string>
+    <string name="local_export_csv">Local Export CSV</string>
+    <string name="local_export_json">Local Export JSON</string>
+    <string name="local_import_csv">Local import csv</string>
+    <string name="local_import_json">Local import json</string>
 </resources>

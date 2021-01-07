@@ -51,8 +51,9 @@ public class BackupFragment extends Fragment {
     public static BackupFragment newInstance() {
         return new BackupFragment();
     }
+
     //TODO XML
-    //TODO online backup functionality
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

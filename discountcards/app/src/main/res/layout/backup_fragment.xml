@@ -10,7 +10,7 @@
         android:id="@+id/local_export_csv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local Export CSV"
+        android:text="@string/local_export_csv"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,7 @@
         android:id="@+id/local_export_json"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local Export JSON"
+        android:text="@string/local_export_json"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +38,7 @@
         android:id="@+id/local_import_csv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local import csv"
+        android:text="@string/local_import_csv"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
         android:id="@+id/local_import_json"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local import json"
+        android:text="@string/local_import_json"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,32 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/local_import_csv"
         app:layout_constraintVertical_bias="0.095" />
-
-    <Button
-        android:id="@+id/online_backup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/online_backup"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/local_import_json"
-        app:layout_constraintVertical_bias="0.186" />
-
-    <Button
-        android:id="@+id/restore_backup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/restore_backup"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/online_backup"
-        app:layout_constraintVertical_bias="0.075" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
