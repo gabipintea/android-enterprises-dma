@@ -223,12 +223,15 @@ public class BackupFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                Intent i = new Intent(getContext(), MainActivity.class);
+
+                ArrayList<User> newusers = db.getUsers();
+
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                preferences.edit().putString("firstname", "John").apply();
-                preferences.edit().putString("lastname", "Doe").apply();
-                preferences.edit().putString("email", "john.doe@gmail.com").apply();
-                preferences.edit().putString("birthday", "01/02/1996").apply();
+                preferences.edit().putString("firstname", newusers.get(0).getFirstName()).apply();
+                preferences.edit().putString("lastname", newusers.get(0).getLastName()).apply();
+                preferences.edit().putString("email", newusers.get(0).getEmail()).apply();
+                preferences.edit().putString("birthday", newusers.get(0).getBirthday()).apply();
+                Intent i = new Intent(getContext(), MainActivity.class);
                 startActivity(i);
 
             }
@@ -379,24 +382,19 @@ public class BackupFragment extends Fragment {
 
 //                Toast.makeText(getContext(), "Imported DB from JSON",
 //                        Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getContext(), MainActivity.class);
+                ArrayList<User> newusers = db.getUsers();
+
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                preferences.edit().putString("firstname", "John").apply();
-                preferences.edit().putString("lastname", "Doe").apply();
-                preferences.edit().putString("email", "john.doe@gmail.com").apply();
-                preferences.edit().putString("birthday", "01/02/1996").apply();
+                preferences.edit().putString("firstname", newusers.get(0).getFirstName()).apply();
+                preferences.edit().putString("lastname", newusers.get(0).getLastName()).apply();
+                preferences.edit().putString("email", newusers.get(0).getEmail()).apply();
+                preferences.edit().putString("birthday", newusers.get(0).getBirthday()).apply();
+                Intent i = new Intent(getContext(), MainActivity.class);
                 startActivity(i);
 
             }
         });
 
-//        final TextView textView = root.findViewById(R.id.text_backup);
-//        mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
         return root;
 
 
