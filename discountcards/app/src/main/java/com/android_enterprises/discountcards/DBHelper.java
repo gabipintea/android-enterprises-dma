@@ -388,21 +388,20 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //TODO call this method somewhere
-    public DiscountCard getCard(long shopId, String userEmail) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        DiscountCard card = new DiscountCard();
-
-        Cursor cursor = db.rawQuery("Select * from Cards where shopId=? AND userEmail=?", new String[]{String.valueOf(shopId), userEmail});
-
-        if( cursor.getCount() > 0 ) {
-            int discount = cursor.getInt(2);
-            String expiryDate = cursor.getString(3);
-
-            card = new DiscountCard(shopId, userEmail, discount, expiryDate);
-        }
-        return card;
-    }
+//    public DiscountCard getCard(long shopId, String userEmail) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        DiscountCard card = new DiscountCard();
+//
+//        Cursor cursor = db.rawQuery("Select * from Cards where shopId=? AND userEmail=?", new String[]{String.valueOf(shopId), userEmail});
+//
+//        if( cursor.getCount() > 0 ) {
+//            int discount = cursor.getInt(2);
+//            String expiryDate = cursor.getString(3);
+//
+//            card = new DiscountCard(shopId, userEmail, discount, expiryDate);
+//        }
+//        return card;
+//    }
 
     public ArrayList<DiscountCard> getCards() {
         SQLiteDatabase db = this.getWritableDatabase();
