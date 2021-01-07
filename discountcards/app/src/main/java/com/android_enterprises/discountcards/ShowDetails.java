@@ -4,12 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.ui.dialogs.CardDialog;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,14 +34,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class ShowDetails extends AppCompatActivity implements CardDialog.CardDialogListener {
+public class ShowDetails extends AppCompatActivity implements CardDialog.CardDialogListener, OnMapReadyCallback {
 
     private static final String TAG = ShowDetails.class.getSimpleName();
 
@@ -42,11 +54,16 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new DBHelper(this);
         setContentView(R.layout.activity_show_details);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        db = new DBHelper(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
         Intent i = getIntent();
         DiscountCard discountCard = (DiscountCard) i.getParcelableExtra("selectedCard");
 
@@ -150,7 +167,7 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
             });
             downloadThread.start();
             //Log.d(TAG, "----------download thread started------------");
-            //TODO show a Google Map with the nearest shop
+
 
         } else {
             Toast.makeText(this, "No card here", Toast.LENGTH_LONG).show();
@@ -173,4 +190,150 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
             Toast.makeText(getApplicationContext(), "Card was not added", Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        String currentShopName = db.getShop(mDiscountCard.getShopId()).getShopName();
+        if(currentShopName.equals("Lidl")) {
+            Lidl(googleMap);
+        } else if(currentShopName.equals("Kaufland")) {
+            Kaufland(googleMap);
+        } else if(currentShopName.equals("Carrefour")) {
+            Carrefour(googleMap);
+        } else {
+            UnknownShop(googleMap);
+        }
+    }
+
+    private void Kaufland(GoogleMap googleMap)
+    {
+        UiSettings ui = googleMap.getUiSettings();
+        ui.setZoomControlsEnabled(true);
+        googleMap.clear();
+        LatLng latLng;
+        MarkerOptions markerOptions;
+
+        ArrayList<String> Kaufland = new ArrayList<String>();
+        Kaufland.add("Soseaua Pipera-Tunari nr. 2/II, Voluntari 077190");
+        Kaufland.add("Str. Barbu Văcărescu 120, București 020284");
+        Kaufland.add("Șoseaua Pantelimon 244-246, București 021901");
+        Kaufland.add("Șoseaua Colentina 6, București 021173");
+        Kaufland.add("Bulevardul Bucureștii Noi 50B, București 012363");
+
+        for(String location : Kaufland) {
+            List<Address> addressList = null;
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = (Address) addressList.get(0);
+
+            // Creating an instance of GeoPoint, to display in Google Map
+            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+
+            markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title(location);
+
+            googleMap.addMarker(markerOptions);
+        }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(44.456032241853826, 26.111870227937555)));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+    }
+
+    private void Lidl(GoogleMap googleMap)
+    {
+        UiSettings ui = googleMap.getUiSettings();
+        ui.setZoomControlsEnabled(true);
+        googleMap.clear();
+        LatLng latLng;
+        MarkerOptions markerOptions;
+
+        ArrayList<String> Lidl = new ArrayList<String>();
+        Lidl.add("Strada Emil Racoviță 51, Voluntari 077190");
+        Lidl.add("Șoseaua București Nord 14, Voluntari 077191");
+        Lidl.add("Bulevardul Eroilor 120, Voluntari 077190");
+        Lidl.add("Strada Erou Iancu Nicolae 88, Voluntari 077190");
+        Lidl.add("Șoseaua Străulești 69F, București 013334");
+
+        for(String location : Lidl) {
+            List<Address> addressList = null;
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = (Address) addressList.get(0);
+
+            // Creating an instance of GeoPoint, to display in Google Map
+            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+
+            markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title(location);
+
+            googleMap.addMarker(markerOptions);
+        }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(44.456032241853826, 26.111870227937555)));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+    }
+
+    private void Carrefour(GoogleMap googleMap)
+    {
+        UiSettings ui = googleMap.getUiSettings();
+        ui.setZoomControlsEnabled(true);
+        googleMap.clear();
+        LatLng latLng;
+        MarkerOptions markerOptions;
+
+        ArrayList<String> Carrefour = new ArrayList<String>();
+        Carrefour.add("Str. Ing, Strada George Constantinescu nr.4B, București 020339");
+        Carrefour.add("Calea Floreasca 246B, București");
+        Carrefour.add("Strada Gara Herăstrău Nr. 4C, București 020334");
+        Carrefour.add("Șoseaua Fundeni nr. 159, București 022324");
+        Carrefour.add("Str. Barbu Văcărescu 154-158, București 020284");
+
+        for(String location : Carrefour) {
+            List<Address> addressList = null;
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = (Address) addressList.get(0);
+
+            // Creating an instance of GeoPoint, to display in Google Map
+            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+
+
+            markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title(location);
+
+            googleMap.addMarker(markerOptions);
+        }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(44.456032241853826, 26.111870227937555)));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+    }
+
+    private void UnknownShop(GoogleMap googleMap) {
+        UiSettings ui = googleMap.getUiSettings();
+        ui.setZoomControlsEnabled(true);
+        googleMap.clear();
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(44.456032241853826, 26.111870227937555)));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+    }
+
 }

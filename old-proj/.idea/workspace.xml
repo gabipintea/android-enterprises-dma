@@ -14,7 +14,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e0206a5-4994-41df-8178-b635b19c59e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/backup/BackupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/backup/BackupFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +64,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../discountcards" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../android-samples/tutorials/java/MapWithMarker" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -294,11 +293,11 @@
     </state>
     <state x="287" y="0" key="CommitChangelistDialog2/0.0.1366.738/1366.0.1366.738@0.0.1366.738" timestamp="1607492063327" />
     <state x="1653" y="0" key="CommitChangelistDialog2/0.0.1366.738/1366.0.1366.738@1366.0.1366.738" timestamp="1607498502691" />
-    <state x="463" y="124" key="FileChooserDialogImpl" timestamp="1609853244475">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state x="1829" y="124" key="FileChooserDialogImpl" timestamp="1610052054321">
+      <screen x="1366" y="0" width="1366" height="738" />
     </state>
     <state x="463" y="124" key="FileChooserDialogImpl/0.0.1366.738/1366.0.1366.738@0.0.1366.738" timestamp="1609853244475" />
-    <state x="1829" y="124" key="FileChooserDialogImpl/0.0.1366.738/1366.0.1366.738@1366.0.1366.738" timestamp="1608096416774" />
+    <state x="1829" y="124" key="FileChooserDialogImpl/0.0.1366.738/1366.0.1366.738@1366.0.1366.738" timestamp="1610052054321" />
     <state width="1323" height="270" key="GridCell.Tab.0.bottom" timestamp="1607498416883">
       <screen x="1366" y="0" width="1366" height="738" />
     </state>
