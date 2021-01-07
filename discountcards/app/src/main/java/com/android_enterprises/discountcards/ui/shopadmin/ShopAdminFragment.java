@@ -21,6 +21,8 @@ import com.android_enterprises.discountcards.R;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.ShopAdapter;
 import com.android_enterprises.discountcards.model.shopType;
+import com.android_enterprises.discountcards.ui.dialogs.ShopDialog;
+import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,10 +128,15 @@ public class ShopAdminFragment extends Fragment {
         addShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openDialog();
             }
         });
 
         return view;
+    }
+
+    public void openDialog() {
+        ShopDialog shopDialog = new ShopDialog();
+        shopDialog.show(getActivity().getSupportFragmentManager(), "shop dialog");
     }
 }

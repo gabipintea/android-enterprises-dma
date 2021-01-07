@@ -3,6 +3,7 @@ package com.android_enterprises.discountcards;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.model.UserAdapter;
+import com.android_enterprises.discountcards.model.shopType;
+import com.android_enterprises.discountcards.ui.dialogs.ShopDialog;
 import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -33,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements UserDialog.UserDialogListener {
+public class MainActivity extends AppCompatActivity implements UserDialog.UserDialogListener, ShopDialog.ShopDialogListener {
 
     // Debugging TAG
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -329,5 +332,25 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         } else {
             Toast.makeText(getApplicationContext(), firstname+" "+lastname+" was not added", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void applyShopTexts(String shopname, String shoptype) {
+        //Toast.makeText(this, shopname + " " + shopType.valueOf(shoptype).getId(), Toast.LENGTH_LONG).show();
+        DBHelper mydb = new DBHelper(this);
+        if(mydb.registerShop(shopname, shopType.valueOf(shoptype).getId(), "https://tnblackhereford.org/wp-content/uploads/2020/05/logo-placeholder-png-6.png" )) {
+            mydb.close();
+            Toast.makeText(this, "Shop added successfully", Toast.LENGTH_SHORT).show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }, 2000);
+        }
+
     }
 }
