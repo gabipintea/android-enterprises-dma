@@ -372,8 +372,10 @@ public class BackupFragment extends Fragment {
                     db.createCard(cardArrayList.get(i).getShopId(),cardArrayList.get(i).getUserEmail(),cardArrayList.get(i).getDiscount(),cardArrayList.get(i).getExpiryDate());
                 }
 
-                Toast.makeText(getContext(), "Imported DB from JSON",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Imported DB from JSON",
+//                        Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
 
             }
         });
