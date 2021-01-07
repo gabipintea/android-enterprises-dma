@@ -50,8 +50,7 @@ public class BackupFragment extends Fragment {
     public static BackupFragment newInstance() {
         return new BackupFragment();
     }
-    //TODO Export and import JSON, XML, CSV, TXT local and online
-
+    //TODO online backup functionality
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

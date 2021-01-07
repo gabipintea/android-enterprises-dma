@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         //Get preferences
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String[] cardsType = {SP.getString("cardsType", "1")};
-        String username = SP.getString("username", "John");
+        String firstname = SP.getString("firstname", "John");
         String email = SP.getString("email", "john.doe@gmail.com");
-        //Toast.makeText(this, "Welcome back, " + username, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Welcome back, " + firstname, Toast.LENGTH_LONG).show();
 
         bundle = new Bundle();
         bundle.putString("email", email);
@@ -177,8 +177,10 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedUser = userAdapter.userMap.get(userSpinner.getSelectedItemId());
-                SP.edit().putString("username", selectedUser.getFirstName()).apply();
+                SP.edit().putString("firstname", selectedUser.getFirstName()).apply();
+                SP.edit().putString("lastname", selectedUser.getLastName()).apply();
                 SP.edit().putString("email", selectedUser.getEmail()).apply();
+                SP.edit().putString("birthday", selectedUser.getBirthday()).apply();
 
                 cardsType[0] = SP.getString("cardsType","1");
 
@@ -289,6 +291,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
 
     public void showSettings(MenuItem item) {
         Intent i = new Intent(getApplicationContext(), MyPreferenceActivity.class);
+        i.putExtra("selectedUser", selectedUser);
         startActivity(i);
     }
 
@@ -297,8 +300,10 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         //Toast.makeText(getApplicationContext(), firstname+" "+lastname, Toast.LENGTH_LONG).show();
         if(db.registerUser(firstname,lastname,email,birthdate)) {
             SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            SP.edit().putString("username", firstname).apply();
+            SP.edit().putString("firstname", firstname).apply();
+            SP.edit().putString("lastname", lastname).apply();
             SP.edit().putString("email", email).apply();
+            SP.edit().putString("birthday", birthdate).apply();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         } else {
             Toast.makeText(getApplicationContext(), firstname+" "+lastname+" was not added", Toast.LENGTH_LONG).show();

@@ -78,20 +78,29 @@ public class DBHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    //TODO call this method somewhere
-    public Boolean editUser(String fName, String lName, String mail, String bDay) {
+    public Boolean editUser(String fName, String lName, String mail, String bDay, String oldMail) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
+        if(!mail.equals(oldMail)) {
+            contentValues.put("userEmail", mail);
+            Cursor cursor = db.rawQuery("Select * from Cards where userEmail=?", new String[]{oldMail});
+            if (cursor.getCount() > 0) {
+                long result = db.update("Cards", contentValues, "userEmail = ?", new String[]{oldMail});
+            }
+            contentValues.clear();
+            contentValues.put("email", mail);
+        }
+
         contentValues.put("firstName", fName);
         contentValues.put("lastName", lName);
-        contentValues.put("email", mail);
         contentValues.put("birthday", String.valueOf(bDay));
 
-        Cursor cursor = db.rawQuery("Select * from Users where email = ?", new String[]{mail});
+        Cursor cursor = db.rawQuery("Select * from Users where email = ?", new String[]{oldMail});
 
         if (cursor.getCount() > 0) {
 
-            long result = db.update("Users", contentValues, "email=?", new String[]{mail});
+            long result = db.update("Users", contentValues, "email=?", new String[]{oldMail});
             if (result == -1)
                 return false;
             else return true;

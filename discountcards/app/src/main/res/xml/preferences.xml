@@ -6,14 +6,25 @@
 
     <PreferenceCategory android:title="Communication">
         <EditTextPreference
-            android:key="username"
-            android:summary="Please provide your username"
-            android:title="Username" />
+            android:id="@+id/firstnamePref"
+            android:key="firstname"
+            android:summary="Please provide your first name"
+            android:title="First Name" />
+
+        <EditTextPreference
+            android:key="lastname"
+            android:summary="Please provide your last name"
+            android:title="Last Name" />
 
         <EditTextPreference
             android:key="email"
             android:summary="Please provide your email"
             android:title="Email" />
+
+        <EditTextPreference
+            android:key="birthday"
+            android:summary="Please provide your birthdate (dd/mm/yyyy)"
+            android:title="Birthdate" />
     </PreferenceCategory>
 
 
