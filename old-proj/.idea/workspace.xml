@@ -14,6 +14,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e0206a5-4994-41df-8178-b635b19c59e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/backup/BackupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../discountcards/app/src/main/java/com/android_enterprises/discountcards/ui/backup/BackupFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

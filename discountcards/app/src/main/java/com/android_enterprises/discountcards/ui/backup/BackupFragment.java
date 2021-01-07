@@ -2,7 +2,9 @@ package com.android_enterprises.discountcards.ui.backup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,6 @@ public class BackupFragment extends Fragment {
     }
     //TODO XML
     //TODO online backup functionality
-    //TODO go to john doe after import
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -223,6 +224,11 @@ public class BackupFragment extends Fragment {
                 }
 
                 Intent i = new Intent(getContext(), MainActivity.class);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                preferences.edit().putString("firstname", "John").apply();
+                preferences.edit().putString("lastname", "Doe").apply();
+                preferences.edit().putString("email", "john.doe@gmail.com").apply();
+                preferences.edit().putString("birthday", "01/02/1996").apply();
                 startActivity(i);
 
             }
@@ -374,6 +380,11 @@ public class BackupFragment extends Fragment {
 //                Toast.makeText(getContext(), "Imported DB from JSON",
 //                        Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getContext(), MainActivity.class);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                preferences.edit().putString("firstname", "John").apply();
+                preferences.edit().putString("lastname", "Doe").apply();
+                preferences.edit().putString("email", "john.doe@gmail.com").apply();
+                preferences.edit().putString("birthday", "01/02/1996").apply();
                 startActivity(i);
 
             }
