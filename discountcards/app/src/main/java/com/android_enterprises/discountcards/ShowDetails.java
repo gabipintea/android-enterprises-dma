@@ -123,7 +123,7 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
                     //Log.d(TAG, "----------download content run------------");
                     HttpURLConnection httpURLConnection = null;
                     try {
-                        URL url = new URL(shop.getLogoUrl());
+                        URL url = new URL(java.net.URLEncoder.encode(shop.getLogoUrl(),"UTF-8"));
                         URLConnection connection = url.openConnection();
                         if(connection instanceof HttpURLConnection)
                         {

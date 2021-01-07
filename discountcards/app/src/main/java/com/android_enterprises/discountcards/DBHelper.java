@@ -38,6 +38,13 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void clearDatabase() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM Users");
+        db.execSQL("DELETE FROM Cards");
+        db.execSQL("DELETE FROM Shops");
+    }
+
     // To be used in the MainActivity in order to start with a refreshed minimal populated DB
     public Boolean insertSampleData() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -165,11 +172,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public Boolean registerShop(String shName, shopType type, String logo) {
+    public Boolean registerShop(String shName, int type, String logo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("shopName", shName);
-        contentValues.put("shopType", String.valueOf(type));
+        contentValues.put("shopType", type);
         contentValues.put("logoURL", logo);
         long result = db.insert("Shops", null, contentValues);
         if (result == -1)
@@ -228,9 +235,9 @@ public class DBHelper extends SQLiteOpenHelper {
         deleted = deleteShopByName("Carrefour");
         deleted = deleteShopByName("Kaufland");
 
-        boolean inserted = registerShop("Lidl", shopType.food,"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
-        inserted = registerShop("Carrefour", shopType.food, "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
-        inserted = registerShop("Kaufland", shopType.general, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
+        boolean inserted = registerShop("Lidl", shopType.food.getId(),"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Lidl_logo.png/600px-Lidl_logo.png");
+        inserted = registerShop("Carrefour", shopType.food.getId(), "https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Carrefour_logo_no_tag.svg/1024px-Carrefour_logo_no_tag.svg.png");
+        inserted = registerShop("Kaufland", shopType.general.getId(), "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png");
         return inserted;
     }
 
@@ -383,6 +390,35 @@ public class DBHelper extends SQLiteOpenHelper {
         return card;
     }
 
+    public ArrayList<DiscountCard> getCards() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<DiscountCard> cards = new ArrayList<DiscountCard>();
+
+        Cursor cursor = db.rawQuery("Select * from Cards", null);
+        if( cursor.getCount() > 0 ) {
+            cursor.moveToFirst();
+
+
+            long shopId = cursor.getInt(0);
+            String userEmail = cursor.getString(1);
+            int discount = cursor.getInt(2);
+            String expiryDate = cursor.getString(3);
+
+            cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
+
+            while(cursor.moveToNext()){
+                shopId = cursor.getInt(0);
+                userEmail = cursor.getString(1);
+                discount = cursor.getInt(2);
+                expiryDate = cursor.getString(3);
+
+                cards.add(new DiscountCard(shopId, userEmail, discount, expiryDate));
+            }
+        }
+
+
+        return cards;
+    }
 
     public ArrayList<DiscountCard> getUserCards(String userEmail) {
         SQLiteDatabase db = this.getWritableDatabase();
