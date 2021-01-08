@@ -12,6 +12,8 @@ import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.User;
 import com.android_enterprises.discountcards.ui.dialogs.CardDialog;
+import com.android_enterprises.discountcards.ui.dialogs.ScanDialog;
+import com.android_enterprises.discountcards.ui.dialogs.UserDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,7 +46,7 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class ShowDetails extends AppCompatActivity implements CardDialog.CardDialogListener, OnMapReadyCallback {
+public class ShowDetails extends AppCompatActivity implements CardDialog.CardDialogListener, OnMapReadyCallback, ScanDialog.ScanDialogListener {
 
     private static final String TAG = ShowDetails.class.getSimpleName();
 
@@ -71,9 +73,7 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO show the QR code with a dialog
-                Snackbar.make(view, "This shows the QR code", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openScanDialog();
             }
         });
 
@@ -336,4 +336,13 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 
+    public void openScanDialog() {
+        ScanDialog scanDialog = new ScanDialog();
+        scanDialog.show(getSupportFragmentManager(), "scan dialog");
+    }
+
+    @Override
+    public void applyQRCode() {
+        Toast.makeText(this, "Scanned", Toast.LENGTH_SHORT).show();
+    }
 }

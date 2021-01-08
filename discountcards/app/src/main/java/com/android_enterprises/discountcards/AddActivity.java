@@ -42,9 +42,10 @@ public class AddActivity extends AppCompatActivity {
     private static final String DATE_PATTERN =
             "(0?[1-9]|1[012])[\\/.-](0?[1-9]|[12][0-9]|3[01])[\\/.-]((19|20)\\d\\d)";
 
-    public boolean validate(final String date) {
+    public boolean validateDate(final String date) {
 
-        matcher = pattern.matcher(date);
+        //TODO check day pattern
+        matcher = Pattern.compile(DATE_PATTERN).matcher(date);
 
         if (matcher.matches()) {
             matcher.reset();
@@ -138,13 +139,13 @@ public class AddActivity extends AppCompatActivity {
 
                 int discount = discountValue.getProgress();
                 String expiryDate = String.valueOf(expiryDateField.getText());
-                matcher = Pattern.compile(DATE_PATTERN).matcher(expiryDate);
+                //matcher = Pattern.compile(DATE_PATTERN).matcher(expiryDate);
 
                 boolean result=false;
 
-                if(matcher.matches()) {
+                if(validateDate(expiryDate)) {
                     result = db.createCard(selectedShop.getShopId(), selectedUser.getEmail(), discount, expiryDate);
-                } else if(!matcher.matches()) {
+                } else if(!validateDate(expiryDate)) {
                     Toast.makeText(getApplicationContext(), "Invalid Date!", Toast.LENGTH_SHORT).show();
                 }
                 if (result) {

@@ -16,9 +16,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MyPreferenceActivity extends PreferenceActivity {
-    //TODO add validations for email
-    private Pattern pattern;
-    private static Matcher matcherDate, matcherEmail;
+
+    private static Pattern pattern;
+    private static Matcher matcherDate = null, matcherEmail;
 
     private static final String DATE_PATTERN =
             "(0?[1-9]|1[012])[\\/.-](0?[1-9]|[12][0-9]|3[01])[\\/.-]((19|20)\\d\\d)";
@@ -26,9 +26,10 @@ public class MyPreferenceActivity extends PreferenceActivity {
     private static final String EMAIL_PATTERN =
             "^[a-zA-Z0-9.!#$%&'+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$";
 
-    public boolean validateDate(final String date) {
-
-        matcherDate = pattern.matcher(date);
+    public static boolean validateDate(final String date) {
+        //TODO check day pattern
+        //matcherDate = pattern.matcher(date);
+        matcherDate = Pattern.compile(DATE_PATTERN).matcher(date);
 
         if (matcherDate.matches()) {
             matcherDate.reset();
@@ -110,11 +111,11 @@ public class MyPreferenceActivity extends PreferenceActivity {
 
                     String oldMail = selectedUser.getEmail();
 
-                    matcherDate = Pattern.compile(DATE_PATTERN).matcher(bDay);
+                    //matcherDate = Pattern.compile(DATE_PATTERN).matcher(bDay);
                     matcherEmail = Pattern.compile(EMAIL_PATTERN).matcher(mail);
 
                     db = new DBHelper(getActivity());
-                    if(matcherDate.matches() && matcherEmail.matches()) {
+                    if(validateDate(bDay) && matcherEmail.matches()) {
                         if (db.editUser(fName, lName, mail, bDay, oldMail)) {
                             db.close();
                             Toast.makeText(getActivity(), "Settings modified succesfully", Toast.LENGTH_LONG).show();
@@ -132,7 +133,7 @@ public class MyPreferenceActivity extends PreferenceActivity {
                             Toast.makeText(getActivity(), "Oops! Something went wrong!", Toast.LENGTH_LONG).show();
                         }
                         prefs.unregisterOnSharedPreferenceChangeListener(this);
-                    } else if(!matcherDate.matches()) {
+                    } else if(!validateDate(bDay)) {
                         Toast.makeText(getActivity(), "Invalid Birthday!", Toast.LENGTH_SHORT).show();
                     } else if(!matcherEmail.matches()) {
                         Toast.makeText(getActivity(), "Invalid Email!", Toast.LENGTH_SHORT).show();
