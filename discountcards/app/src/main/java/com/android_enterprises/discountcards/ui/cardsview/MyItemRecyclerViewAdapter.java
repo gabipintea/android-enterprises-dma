@@ -67,8 +67,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.name.setText(shop.getShopName());
 
         //TODO uncomment the following ones
-        //holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()));
-        //holder.expiry.setText(String.valueOf(mValues.get(position).getExpiryDate()));
+        holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()) + "%");
+        holder.expiry.setText("EXP: " + String.valueOf(mValues.get(position).getExpiryDate()));
 
         //SHOP_LOGO
         @SuppressLint("HandlerLeak") final Handler handler = new Handler()
@@ -131,8 +131,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final ImageView logo;
         public final TextView name;
         //TODO uncomment these
-//        public final TextView discount;
-//        public final TextView expiry;
+       public final TextView discount;
+       public final TextView expiry;
 
         public ViewHolder(View view) {
             super(view);
@@ -151,8 +151,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             });
             name = (TextView) view.findViewById(R.id.tvName);
             //TODO uncomment these
-//            discount = (TextView) view.findViewById(R.id.tvDiscount);
-//            expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
+          discount = (TextView) view.findViewById(R.id.tvDiscount);
+         expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
         }
 
 //        @Override
