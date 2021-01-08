@@ -52,4 +52,5 @@
     <string name="local_export_json">Local Export JSON</string>
     <string name="local_import_csv">Local import csv</string>
     <string name="local_import_json">Local import json</string>
+    <string name="partner_shops">Partner shops</string>
 </resources>
