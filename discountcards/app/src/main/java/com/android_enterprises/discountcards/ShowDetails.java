@@ -71,7 +71,7 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO show the QR code within a popup and increase the screen brightness
+                //TODO show the QR code with a dialog
                 Snackbar.make(view, "This shows the QR code", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
