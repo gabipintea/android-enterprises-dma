@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,17 @@ import com.android_enterprises.discountcards.ShowDetails;
 import com.android_enterprises.discountcards.model.DiscountCard;
 import com.android_enterprises.discountcards.model.Shop;
 import com.android_enterprises.discountcards.model.User;
+import com.android_enterprises.discountcards.model.shopType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,12 +48,16 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 public class BackupFragment extends Fragment {
 
     private static final String TAG = BackupFragment.class.getSimpleName();
 
 
-    public Button exportLocalCSV, importLocalCSV, exportLocalJSON, importLocalJSON;
+    public Button exportLocalCSV, importLocalCSV, exportLocalJSON, importLocalJSON, exportLocalXML, importLocalXML;
 
     public DBHelper db;
 
@@ -63,6 +76,8 @@ public class BackupFragment extends Fragment {
         importLocalCSV = root.findViewById(R.id.local_import_csv);
         exportLocalJSON = root.findViewById(R.id.local_export_json);
         importLocalJSON = root.findViewById(R.id.local_import_json);
+        exportLocalXML = root.findViewById(R.id.local_export_xml);
+        importLocalXML = root.findViewById(R.id.local_import_xml);
 
 
         db = new DBHelper(this.getContext());
@@ -393,6 +408,212 @@ public class BackupFragment extends Fragment {
                 Intent i = new Intent(getContext(), MainActivity.class);
                 startActivity(i);
 
+            }
+        });
+
+        exportLocalXML.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<User> users = db.getUsers();
+                ArrayList<Shop> shops = db.getShops();
+                ArrayList<DiscountCard> discountCards = db.getCards();
+
+                File exportXML = new File( getContext().getFilesDir() + "/db.xml");
+                FileOutputStream fosXML = null;
+                XmlSerializer serializer = Xml.newSerializer();
+                try {
+                    exportXML.createNewFile();
+                    fosXML = new FileOutputStream(exportXML);
+
+                    serializer.setOutput(fosXML, "UTF-8");
+                    serializer.startDocument(null, Boolean.valueOf(true));
+                    serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+
+                    serializer.startTag(null, "database");
+
+                    serializer.startTag(null, "users");
+                    serializer.attribute(null, "number", String.valueOf(users.size()));
+                    for(User u : users) {
+                        serializer.startTag(null, "user");
+
+                        serializer.startTag(null, "firstName");
+                        serializer.text(u.getFirstName());
+                        serializer.endTag(null, "firstName");
+
+                        serializer.startTag(null, "lastName");
+                        serializer.text(u.getLastName());
+                        serializer.endTag(null, "lastName");
+
+                        serializer.startTag(null, "email");
+                        serializer.text(u.getEmail());
+                        serializer.endTag(null, "email");
+
+                        serializer.startTag(null, "birthday");
+                        serializer.text(u.getBirthday());
+                        serializer.endTag(null, "birthday");
+
+                        serializer.endTag(null, "user");
+                    }
+                    serializer.endTag(null, "users");
+
+                    serializer.startTag(null, "shops");
+                    serializer.attribute(null, "number", String.valueOf(shops.size()));
+                    for(Shop s : shops) {
+                        serializer.startTag(null, "shop");
+
+                        serializer.startTag(null, "shopId");
+                        serializer.text(String.valueOf(s.getShopId()));
+                        serializer.endTag(null, "shopId");
+
+                        serializer.startTag(null, "shopName");
+                        serializer.text(s.getShopName());
+                        serializer.endTag(null, "shopName");
+
+                        serializer.startTag(null, "shopType");
+                        serializer.text(String.valueOf(s.getType().getId()));
+                        serializer.endTag(null, "shopType");
+
+                        serializer.startTag(null, "logoURL");
+                        serializer.text(s.getLogoUrl());
+                        serializer.endTag(null, "logoURL");
+
+                        serializer.endTag(null, "shop");
+                    }
+                    serializer.endTag(null, "shops");
+
+                    serializer.startTag(null, "cards");
+                    serializer.attribute(null, "number", String.valueOf(discountCards.size()));
+                    for(DiscountCard c : discountCards) {
+                        serializer.startTag(null, "card");
+
+                        serializer.startTag(null, "shopId");
+                        serializer.text(String.valueOf(c.getShopId()));
+                        serializer.endTag(null, "shopId");
+
+                        serializer.startTag(null, "userEmail");
+                        serializer.text(c.getUserEmail());
+                        serializer.endTag(null, "userEmail");
+
+                        serializer.startTag(null, "discount");
+                        serializer.text(String.valueOf(c.getDiscount()));
+                        serializer.endTag(null, "discount");
+
+                        serializer.startTag(null, "expiryDate");
+                        serializer.text(c.getExpiryDate());
+                        serializer.endTag(null, "expiryDate");
+
+                        serializer.endTag(null, "card");
+                    }
+                    serializer.endTag(null,"cards");
+
+                    serializer.endTag(null,"database");
+
+                    serializer.endDocument();
+                    serializer.flush();
+                    fosXML.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Toast.makeText(getContext(), "Saved to " + getContext().getFilesDir() + "/",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        importLocalXML.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.clearDatabase();
+
+                User user = new User();
+                Shop shop = new Shop();
+                DiscountCard card = new DiscountCard();
+                String text = "";
+
+                try {
+                    String path = getContext().getFilesDir()+"/db.xml";
+                    File fileDatabase = new File(path);
+                    InputStream isDatabase = new FileInputStream(fileDatabase);
+
+                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    factory.setNamespaceAware(true);
+                    XmlPullParser parser = factory.newPullParser();
+
+                    parser.setInput(isDatabase,null);
+
+                    int eventType = parser.getEventType();
+                    while(eventType != XmlPullParser.END_DOCUMENT) {
+                        String tagName = parser.getName();
+                        switch (eventType) {
+                            case XmlPullParser.START_TAG:
+                                if(tagName.equalsIgnoreCase("user")) {
+                                    user = new User();
+                                }
+                                break;
+
+                            case XmlPullParser.TEXT:
+                                text = parser.getText();
+                                break;
+
+                            case XmlPullParser.END_TAG:
+                                if(tagName.equalsIgnoreCase("user")) {
+                                    db.registerUser(user.getFirstName(),user.getLastName(),user.getEmail(),user.getBirthday());
+                                } else if(tagName.equalsIgnoreCase("firstName")) {
+                                    user.setFirstName(text);
+                                } else if(tagName.equalsIgnoreCase("lastName")) {
+                                    user.setLastName(text);
+                                } else if(tagName.equalsIgnoreCase("email")) {
+                                    user.setEmail(text);
+                                } else if(tagName.equalsIgnoreCase("birthday")) {
+                                    user.setBirthday(text);
+                                }
+
+                                if(tagName.equalsIgnoreCase("shop")) {
+                                    db.registerShop(shop.getShopName(), shop.getType().getId(), shop.getLogoUrl());
+                                } else if(tagName.equalsIgnoreCase("shopName")) {
+                                    shop.setShopName(text);
+                                } else if(tagName.equalsIgnoreCase("shopType")) {
+                                    shop.setType(shopType.fromId(Integer.parseInt(text)));
+                                } else if(tagName.equalsIgnoreCase("logoURL")) {
+                                    shop.setLogoUrl(text);
+                                }
+
+                                if(tagName.equalsIgnoreCase("card")) {
+                                    db.createCard(card.getShopId(), card.getUserEmail(), card.getDiscount(), card.getExpiryDate());
+                                } else if(tagName.equalsIgnoreCase("shopId")) {
+                                    card.setShopId(Integer.parseInt(text));
+                                } else if(tagName.equalsIgnoreCase("userEmail")) {
+                                    card.setUserEmail(text);
+                                } else if(tagName.equalsIgnoreCase("discount")) {
+                                    card.setDiscount(Integer.parseInt(text));
+                                } else if(tagName.equalsIgnoreCase("expiryDate")) {
+                                    card.setExpiryDate(text);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                        eventType=parser.next();
+                    }
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getContext(), "Imported DB",
+                        Toast.LENGTH_SHORT).show();
+
+                ArrayList<User> newusers = db.getUsers();
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                preferences.edit().putString("firstname", newusers.get(0).getFirstName()).apply();
+                preferences.edit().putString("lastname", newusers.get(0).getLastName()).apply();
+                preferences.edit().putString("email", newusers.get(0).getEmail()).apply();
+                preferences.edit().putString("birthday", newusers.get(0).getBirthday()).apply();
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
             }
         });
 

@@ -35,6 +35,20 @@
         app:layout_constraintVertical_bias="0.036" />
 
     <Button
+        android:id="@+id/local_export_xml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local export xml"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/local_export_json"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <Button
         android:id="@+id/local_import_csv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/local_export_json"
+        app:layout_constraintTop_toBottomOf="@+id/local_export_xml"
         app:layout_constraintVertical_bias="0.032" />
 
     <Button
@@ -58,7 +72,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/local_import_csv"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintVertical_bias="0.093" />
+
+    <Button
+        android:id="@+id/local_import_xml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local import xml"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/local_import_json"
+        app:layout_constraintVertical_bias="0.115" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
