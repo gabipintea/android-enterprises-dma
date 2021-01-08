@@ -473,9 +473,9 @@ public class DBHelper extends SQLiteOpenHelper {
         shops = getShops();
 
         if(shops.size() == 3) {
-            inserted = createCard(shops.get(0).getShopId(), "john.doe@gmail.com", 50, "20/20/2021");
-            inserted = createCard(shops.get(1).getShopId(), "xi.cho@gmail.com", 12, "20/20/2025");
-            inserted = createCard(shops.get(2).getShopId(), "franck.stank@gmail.com", 50, "20/20/2023");
+            inserted = createCard(shops.get(0).getShopId(), "john.doe@gmail.com", 50, "20/02/2021");
+            inserted = createCard(shops.get(1).getShopId(), "xi.cho@gmail.com", 12, "20/12/2025");
+            inserted = createCard(shops.get(2).getShopId(), "franck.stank@gmail.com", 50, "19/08/2023");
         }
 
         return inserted;

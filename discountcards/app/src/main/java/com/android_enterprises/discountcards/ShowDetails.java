@@ -43,6 +43,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -52,6 +54,53 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
 
     DBHelper db;
     DiscountCard mDiscountCard;
+    private Matcher matcher;
+
+    private static final String DATE_PATTERN =
+            "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)(\\d{4})$";
+
+    public boolean validateDate(final String date) {
+
+        matcher = Pattern.compile(DATE_PATTERN).matcher(date);
+
+        if (matcher.matches()) {
+            matcher.reset();
+
+            if (matcher.find()) {
+                String day = matcher.group(1);
+                String month = matcher.group(4);
+                int year = Integer.parseInt(matcher.group(10));
+
+                if (day.equals("31") &&
+                        (month.equals("4") || month.equals("6") || month.equals("9") ||
+                                month.equals("11") || month.equals("04") || month.equals("06") ||
+                                month.equals("09"))) {
+                    return false; // only 1,3,5,7,8,10,12 has 31 days
+                } else if (month.equals("2") || month.equals("02")) {
+                    //leap year
+                    if (year % 4 == 0) {
+                        if (day.equals("30") || day.equals("31")) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        if (day.equals("29") || day.equals("30") || day.equals("31")) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,13 +231,18 @@ public class ShowDetails extends AppCompatActivity implements CardDialog.CardDia
 
     @Override
     public void applyTexts(int discount, String expiryDate) {
-        if(db.editCard(mDiscountCard.getShopId(), mDiscountCard.getUserEmail(),discount, expiryDate)) {
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), "Card was not added", Toast.LENGTH_LONG).show();
+        if(validateDate(expiryDate)) {
+            if(db.editCard(mDiscountCard.getShopId(), mDiscountCard.getUserEmail(),discount, expiryDate)) {
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "Card was not added", Toast.LENGTH_LONG).show();
+            }
+        } else if(!validateDate(expiryDate)) {
+            Toast.makeText(getApplicationContext(), "Invalid Date!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

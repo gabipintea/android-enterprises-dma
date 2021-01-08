@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:height="50dp"
-        android:labelFor="@id/expiryDate"
         android:text="@string/expiry_date"
         android:textAlignment="center"
         android:textSize="25sp"
@@ -37,6 +36,7 @@
         android:layout_alignParentStart="true" />
 
     <EditText
+        android:hint="@string/date_format"
         android:id="@+id/expiryDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

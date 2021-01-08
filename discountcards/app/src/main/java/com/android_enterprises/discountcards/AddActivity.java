@@ -40,11 +40,10 @@ public class AddActivity extends AppCompatActivity {
     private Matcher matcher;
 
     private static final String DATE_PATTERN =
-            "(0?[1-9]|1[012])[\\/.-](0?[1-9]|[12][0-9]|3[01])[\\/.-]((19|20)\\d\\d)";
+            "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)(\\d{4})$";
 
     public boolean validateDate(final String date) {
 
-        //TODO check day pattern
         matcher = Pattern.compile(DATE_PATTERN).matcher(date);
 
         if (matcher.matches()) {
@@ -52,8 +51,8 @@ public class AddActivity extends AppCompatActivity {
 
             if (matcher.find()) {
                 String day = matcher.group(1);
-                String month = matcher.group(2);
-                int year = Integer.parseInt(matcher.group(3));
+                String month = matcher.group(4);
+                int year = Integer.parseInt(matcher.group(10));
 
                 if (day.equals("31") &&
                         (month.equals("4") || month.equals("6") || month.equals("9") ||

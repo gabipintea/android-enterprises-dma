@@ -21,13 +21,12 @@ public class MyPreferenceActivity extends PreferenceActivity {
     private static Matcher matcherDate = null, matcherEmail;
 
     private static final String DATE_PATTERN =
-            "(0?[1-9]|1[012])[\\/.-](0?[1-9]|[12][0-9]|3[01])[\\/.-]((19|20)\\d\\d)";
+            "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)(\\d{4})$";
 
     private static final String EMAIL_PATTERN =
             "^[a-zA-Z0-9.!#$%&'+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$";
 
     public static boolean validateDate(final String date) {
-        //TODO check day pattern
         //matcherDate = pattern.matcher(date);
         matcherDate = Pattern.compile(DATE_PATTERN).matcher(date);
 
@@ -36,8 +35,8 @@ public class MyPreferenceActivity extends PreferenceActivity {
 
             if (matcherDate.find()) {
                 String day = matcherDate.group(1);
-                String month = matcherDate.group(2);
-                int year = Integer.parseInt(matcherDate.group(3));
+                String month = matcherDate.group(4);
+                int year = Integer.parseInt(matcherDate.group(10));
 
                 if (day.equals("31") &&
                         (month.equals("4") || month.equals("6") || month.equals("9") ||
