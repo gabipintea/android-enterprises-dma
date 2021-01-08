@@ -251,8 +251,6 @@ public class BackupFragment extends Fragment {
             }
         });
 
-
-        //TODO change Gson to JSONArray
         exportLocalJSON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
