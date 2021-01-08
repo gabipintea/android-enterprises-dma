@@ -59,8 +59,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.mItem = mValues.get(position);
         holder.name.setText(shop.getShopName());
-        holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()));
-        holder.expiry.setText(String.valueOf(mValues.get(position).getExpiryDate()));
+        holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()) + "%");
+        holder.expiry.setText(String.valueOf("EXP: " + mValues.get(position).getExpiryDate()));
 
         //SHOP_LOGO
         @SuppressLint("HandlerLeak") final Handler handler = new Handler()
