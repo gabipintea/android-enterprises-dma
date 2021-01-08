@@ -251,7 +251,6 @@ public class BackupFragment extends Fragment {
             }
         });
 
-
         exportLocalJSON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

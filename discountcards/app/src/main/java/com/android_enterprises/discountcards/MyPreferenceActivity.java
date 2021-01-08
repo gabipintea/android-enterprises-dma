@@ -1,17 +1,13 @@
 package com.android_enterprises.discountcards;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android_enterprises.discountcards.model.User;
@@ -22,22 +18,25 @@ import java.util.regex.Pattern;
 public class MyPreferenceActivity extends PreferenceActivity {
     //TODO add validations for email
     private Pattern pattern;
-    private static Matcher matcher;
+    private static Matcher matcherDate, matcherEmail;
 
     private static final String DATE_PATTERN =
             "(0?[1-9]|1[012])[\\/.-](0?[1-9]|[12][0-9]|3[01])[\\/.-]((19|20)\\d\\d)";
 
-    public boolean validate(final String date) {
+    private static final String EMAIL_PATTERN =
+            "^[a-zA-Z0-9.!#$%&'+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$";
 
-        matcher = pattern.matcher(date);
+    public boolean validateDate(final String date) {
 
-        if (matcher.matches()) {
-            matcher.reset();
+        matcherDate = pattern.matcher(date);
 
-            if (matcher.find()) {
-                String day = matcher.group(1);
-                String month = matcher.group(2);
-                int year = Integer.parseInt(matcher.group(3));
+        if (matcherDate.matches()) {
+            matcherDate.reset();
+
+            if (matcherDate.find()) {
+                String day = matcherDate.group(1);
+                String month = matcherDate.group(2);
+                int year = Integer.parseInt(matcherDate.group(3));
 
                 if (day.equals("31") &&
                         (month.equals("4") || month.equals("6") || month.equals("9") ||
@@ -69,7 +68,6 @@ public class MyPreferenceActivity extends PreferenceActivity {
             return false;
         }
     }
-
 
     private final String TAG = MyPreferenceActivity.class.getSimpleName();
     static User selectedUser;
@@ -112,11 +110,11 @@ public class MyPreferenceActivity extends PreferenceActivity {
 
                     String oldMail = selectedUser.getEmail();
 
-                    matcher = Pattern.compile(DATE_PATTERN).matcher(bDay);
-
+                    matcherDate = Pattern.compile(DATE_PATTERN).matcher(bDay);
+                    matcherEmail = Pattern.compile(EMAIL_PATTERN).matcher(mail);
 
                     db = new DBHelper(getActivity());
-                    if(matcher.matches()) {
+                    if(matcherDate.matches() && matcherEmail.matches()) {
                         if (db.editUser(fName, lName, mail, bDay, oldMail)) {
                             db.close();
                             Toast.makeText(getActivity(), "Settings modified succesfully", Toast.LENGTH_LONG).show();
@@ -134,8 +132,10 @@ public class MyPreferenceActivity extends PreferenceActivity {
                             Toast.makeText(getActivity(), "Oops! Something went wrong!", Toast.LENGTH_LONG).show();
                         }
                         prefs.unregisterOnSharedPreferenceChangeListener(this);
-                    } else if(!matcher.matches()) {
+                    } else if(!matcherDate.matches()) {
                         Toast.makeText(getActivity(), "Invalid Birthday!", Toast.LENGTH_SHORT).show();
+                    } else if(!matcherEmail.matches()) {
+                        Toast.makeText(getActivity(), "Invalid Email!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
