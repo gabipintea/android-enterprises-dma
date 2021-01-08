@@ -155,6 +155,15 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton camfab = findViewById(R.id.fsb);
+        camfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "This scans a QR code", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         shopSpinner = (Spinner) findViewById(R.id.shopSpinner);
 
         shops.clear();

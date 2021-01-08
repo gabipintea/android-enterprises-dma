@@ -29,6 +29,8 @@ public class MySeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setTextSize(60);
-        c.drawText(""+this.getProgress(), thumb_x, middle, paint);
+        if(getProgress() != 0) {
+            c.drawText(""+this.getProgress(), thumb_x, middle, paint);
+        }
     }
 }

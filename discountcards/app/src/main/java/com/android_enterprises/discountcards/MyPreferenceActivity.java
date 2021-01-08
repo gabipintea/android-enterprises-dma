@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MyPreferenceActivity extends PreferenceActivity {
-    //TODO add validations for fields other than birthday
+    //TODO add validations for email
     private Pattern pattern;
     private static Matcher matcher;
 
@@ -119,7 +119,7 @@ public class MyPreferenceActivity extends PreferenceActivity {
                     if(matcher.matches()) {
                         if (db.editUser(fName, lName, mail, bDay, oldMail)) {
                             db.close();
-                            Toast.makeText(getActivity(), "User modified succesfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Settings modified succesfully", Toast.LENGTH_LONG).show();
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override

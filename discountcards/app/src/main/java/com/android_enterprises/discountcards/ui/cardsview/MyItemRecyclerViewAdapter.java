@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,9 +67,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 //        holder.mContentView.setText(String.valueOf(mValues.get(position).getDiscount()));
         holder.name.setText(shop.getShopName());
 
-        //TODO uncomment the following ones
-        //holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()));
-        //holder.expiry.setText(String.valueOf(mValues.get(position).getExpiryDate()));
+
+        holder.discount.setText(String.valueOf(mValues.get(position).getDiscount()) + "%");
+        holder.expiry.setText("EXP: " + String.valueOf(mValues.get(position).getExpiryDate()));
 
         //SHOP_LOGO
         @SuppressLint("HandlerLeak") final Handler handler = new Handler()
@@ -130,9 +131,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         public final ImageView logo;
         public final TextView name;
-        //TODO uncomment these
-//        public final TextView discount;
-//        public final TextView expiry;
+
+        public final TextView discount;
+        public final TextView expiry;
+        public final LinearLayout linearLayout;
 
         public ViewHolder(View view) {
             super(view);
@@ -140,8 +142,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 //            mIdView = (TextView) view.findViewById(R.id.item_number);
 //            mContentView = (TextView) view.findViewById(R.id.content);
 
-            logo = (ImageView) view.findViewById(R.id.logoView);
-            logo.setOnClickListener(new View.OnClickListener() {
+            linearLayout = (LinearLayout) view.findViewById(R.id.cardContainer);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(mView.getContext(), ShowDetails.class);
@@ -149,10 +151,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                     mView.getContext().startActivity(i);
                 }
             });
+
+            logo = (ImageView) view.findViewById(R.id.logoView);
+
             name = (TextView) view.findViewById(R.id.tvName);
-            //TODO uncomment these
-//            discount = (TextView) view.findViewById(R.id.tvDiscount);
-//            expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
+
+            discount = (TextView) view.findViewById(R.id.tvDiscount);
+            expiry = (TextView) view.findViewById(R.id.tvExpiryDate);
+
         }
 
 //        @Override

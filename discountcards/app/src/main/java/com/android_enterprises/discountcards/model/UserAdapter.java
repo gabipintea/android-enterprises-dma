@@ -65,7 +65,6 @@ public class UserAdapter extends BaseAdapter {
 
     private static class UserViewHolder
     {
-        //TODO: maybe add the profile picture also?
        public TextView name, email;
     }
 

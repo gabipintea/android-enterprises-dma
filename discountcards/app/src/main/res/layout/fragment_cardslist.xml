@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:id="@+id/cardContainer"
     tools:context=".MainActivity">
 
     <ImageView
@@ -17,39 +20,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textAllCaps="true"
-            android:textColor="#000000"
-            android:textSize="25sp"
-            android:gravity="center" />
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvDiscount"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/textview"
+                android:paddingLeft="5dp"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/tvExpiryDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingLeft="5dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/textview" />
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvDiscount"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:textSize="25sp"
+            android:textColor="@color/teal_200"
+            android:text="TextView" />
+
     </LinearLayout>
+
 </LinearLayout>

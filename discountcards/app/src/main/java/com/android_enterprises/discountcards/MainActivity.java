@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
         //Get preferences
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String[] cardsType = {SP.getString("cardsType", "1")};
