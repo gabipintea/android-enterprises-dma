@@ -65,8 +65,6 @@ public class BackupFragment extends Fragment {
         return new BackupFragment();
     }
 
-    //TODO XML
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -253,6 +251,8 @@ public class BackupFragment extends Fragment {
             }
         });
 
+
+        //TODO change Gson to JSONArray
         exportLocalJSON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
