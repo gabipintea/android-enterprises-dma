@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements UserDialog.UserDi
         //Run the app and stop it afterwards
         //Toggle the sample boolean to false
         //Run the app as you wish
-        boolean sample = false;
+        boolean sample = true;
 
         if(sample) {
             //#######################INSERT SCRIPT##############################
